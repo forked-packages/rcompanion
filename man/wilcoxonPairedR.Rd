@@ -4,11 +4,22 @@
 \alias{wilcoxonPairedR}
 \title{r effect size for Wilcoxon two-sample paired signed-rank test}
 \usage{
-wilcoxonPairedR(x, g = NULL, ci = FALSE, conf = 0.95,
-  type = "perc", R = 1000, histogram = FALSE, digits = 3, ...)
+wilcoxonPairedR(
+  x,
+  g = NULL,
+  coin = FALSE,
+  ci = FALSE,
+  conf = 0.95,
+  type = "perc",
+  R = 1000,
+  histogram = FALSE,
+  cases = TRUE,
+  digits = 3,
+  ...
+)
 }
 \arguments{
-\item{x}{A vector of observations of an ordinal variable.}
+\item{x}{A vector of observations.}
 
 \item{g}{The vector of observations for
 the grouping, nominal variable.
@@ -16,6 +27,14 @@ Only the first two levels of the nominal variable are used.
 The data must be ordered so that the first observation of the
 of the first group is paired with the first observation of the
 second group.}
+
+\item{coin}{If \code{FALSE}, the default, the Z value
+is extracted from a function similar to the
+\code{wilcox.test} function in the stats package.
+If \code{TRUE}, the Z value
+is extracted from the \code{wilcox_test} function in the
+coin package.  This method may be much slower, especially
+if a confidence interval is produced.}
 
 \item{ci}{If \code{TRUE}, returns confidence intervals by bootstrap.
 May be slow.}
@@ -31,9 +50,15 @@ Passed to \code{boot.ci}.}
 
 \item{histogram}{If \code{TRUE}, produces a histogram of bootstrapped values.}
 
+\item{cases}{By default the \code{N} used in the formula for \code{r}
+is the number of pairs.  If \code{cases=FALSE},
+the \code{N} used in the formula for \code{r}
+is the total number of observations, as some sources suggest.}
+
 \item{digits}{The number of significant digits in the output.}
 
-\item{...}{Additional arguments passed to the \code{wilcoxsign_test} function.}
+\item{...}{Additional arguments passed to the \code{wilcoxsign_test} 
+function.}
 }
 \value{
 A single statistic, r.
@@ -46,16 +71,28 @@ Calculates r effect size
              confidence intervals by bootstrap.
 }
 \details{
-A Z value is extracted from the \code{wilcoxsign_test} function in the
-          coin package.  r  is calculated as Z divided by 
+r  is calculated as Z divided by 
           square root of the number of observations in one group. This 
-          results in a statistic that ranges from 0 to 1.
+          results in a statistic that ranges from -1 to 1.
+          This range doesn't hold if \code{cases=FALSE}.
+          
+          This statistic reports a smaller effect size than does
+          the matched-pairs rank biserial correlation coefficient 
+          (\code{wilcoxonPairedRC}), and won't reach a value
+          of -1 or 1 unless there are ties in paired differences.
 
           Currently, the function makes no provisions for \code{NA}
           values in the data.  It is recommended that \code{NA}s be removed
           beforehand.
 
-          When r is close to 0 or very large,
+          When the data in the first group are greater than
+          in the second group, r is positive.
+          When the data in the second group are greater than
+          in the first group, r is negative.
+          Be cautious with this interpretation, as R will alphabetize
+          groups if \code{g} is not already a factor.
+          
+          When r is close to extremes,
           or with small counts in some cells,
           the confidence intervals 
           determined by this
@@ -69,6 +106,9 @@ wilcoxonPairedR(x = Pooh$Likert, g = Pooh$Time)
 }
 \references{
 \url{http://rcompanion.org/handbook/F_06.html}
+}
+\seealso{
+\code{\link{wilcoxonPairedRC}}
 }
 \author{
 Salvatore Mangiafico, \email{mangiafico@njaes.rutgers.edu}

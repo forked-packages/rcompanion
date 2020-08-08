@@ -4,9 +4,20 @@
 \alias{freemanTheta}
 \title{Freeman's theta}
 \usage{
-freemanTheta(x, g = NULL, group = "row", verbose = FALSE,
-  progress = FALSE, ci = FALSE, conf = 0.95, type = "perc",
-  R = 1000, histogram = FALSE, digits = 3)
+freemanTheta(
+  x,
+  g = NULL,
+  group = "row",
+  verbose = FALSE,
+  progress = FALSE,
+  ci = FALSE,
+  conf = 0.95,
+  type = "perc",
+  R = 1000,
+  histogram = FALSE,
+  digits = 3,
+  reportIncomplete = FALSE
+)
 }
 \arguments{
 \item{x}{Either a two-way table or a two-way matrix.
@@ -40,6 +51,11 @@ Passed to \code{boot.ci}.}
 \item{histogram}{If \code{TRUE}, produces a histogram of bootstrapped values.}
 
 \item{digits}{The number of significant digits in the output.}
+
+\item{reportIncomplete}{If \code{FALSE} (the default),
+\code{NA} will be reported in cases where there
+are instances of the calculation of the statistic
+failing during the bootstrap procedure.}
 }
 \value{
 A single statistic, Freeman's theta.
@@ -61,6 +77,13 @@ Freeman's coefficent of differentiation (theta)
           Currently, the function makes no provisions for \code{NA}
           values in the data.  It is recommended that \code{NA}s be removed
           beforehand.
+          
+          Because theta is always positive, if \code{type="perc"},
+          the confidence interval will
+          never cross zero, and should not
+          be used for statistical inference.
+          However, if \code{type="norm"}, the confidence interval
+          may cross zero.
 
           When theta is close to 0 or very large,
           or with small counts in some cells,

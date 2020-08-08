@@ -4,9 +4,19 @@
 \alias{cramerVFit}
 \title{Cramer's V for chi-square goodness-of-fit tests}
 \usage{
-cramerVFit(x, p = rep(1/length(x), length(x)), ci = FALSE,
-  conf = 0.95, type = "perc", R = 1000, histogram = FALSE,
-  digits = 4, ...)
+cramerVFit(
+  x,
+  p = rep(1/length(x), length(x)),
+  ci = FALSE,
+  conf = 0.95,
+  type = "perc",
+  R = 1000,
+  histogram = FALSE,
+  digits = 4,
+  reportIncomplete = FALSE,
+  verbose = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{A vector of observed counts.}
@@ -28,6 +38,13 @@ Passed to \code{boot.ci}.}
 \item{histogram}{If \code{TRUE}, produces a histogram of bootstrapped values.}
 
 \item{digits}{The number of significant digits in the output.}
+
+\item{reportIncomplete}{If \code{FALSE} (the default),
+\code{NA} will be reported in cases where there
+are instances of the calculation of the statistic
+failing during the bootstrap procedure.}
+
+\item{verbose}{If \code{TRUE}, prints additional statistics.}
 
 \item{...}{Additional arguments passed to \code{chisq.test}.}
 }
@@ -52,13 +69,24 @@ This modification of Cramer's V
           and it will be equal to 0 when the counts are equally distributed
           across categories.
           This does not hold if the expected frequencies are not
-          equally-distributed. 
+          equally-distributed.
           
+          Because V is always positive,
+          if \code{type="perc"},
+          the confidence interval will
+          never cross zero, and should not
+          be used for statistical inference. 
+          However, if \code{type="norm"}, the confidence interval
+          may cross zero.
+                     
           When V is close to 0 or 1,
           or with small counts, 
           the confidence intervals 
           determined by this
           method may not be reliable, or the procedure may fail.
+          
+          In addition, the function will not return a confidence
+          interval if there are zeros in any cell.
 }
 \examples{
 ### Equal probabilities example

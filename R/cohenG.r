@@ -18,14 +18,41 @@
 #' @param R The number of replications to use for bootstrap.
 #' @param histogram If \code{TRUE}, produces a histogram of bootstrapped values.
 #' @param digits The number of significant digits in the output.
+#' @param reportIncomplete If \code{FALSE} (the default),
+#'                         \code{NA} will be reported in cases where there
+#'                         are instances of the calculation of the statistic
+#'                         failing during the bootstrap procedure. 
+#' @param ... Additional arguments (ignored).
 #' 
 #' @details For a 2 x 2 table, where a and d are the concordant cells
 #'          and b and c are discordant cells:
-#'          Odds ratio is the greater of b/c or c/b;
-#'          P is the greater of b/(b+c) or c/(b+c);
+#'          Odds ratio is b/c;
+#'          P is b/(b+c);
 #'          and Cohen's g is P - 0.5.
-#'          These statistics are extended to tables larger
-#'          than 2 x 2.
+#'          
+#'          In the 2 x 2 case, the statistics are directional.
+#'          That is, when cell [1, 2] in the table is greater than
+#'          cell [2, 1], OR is greater than 1, P is greater than 0.5,
+#'          and g is positive.  
+#'          
+#'          In the opposite case, OR is less than 1,
+#'          P is less than 0.5, and g is negative.
+#'          
+#'          In the 2 x 2 case, when the effect is small, the
+#'          confidence interval for OR can pass through 1,
+#'          for g can pass through 0, and for P can pass through 0.5.
+#'          
+#'          For tables larger than 2 x 2, the statistics are not directional.
+#'          That is, OR is always >= 1, P is always >= 0.5, and
+#'          g is always positive.  
+#'          Because of this, if \code{type="perc"}, the confidence interval will
+#'          never cross the values for no effect 
+#'          (OR = 1, P = 0.5, or g = 0).
+#'          Because of this, the confidence interval range
+#'          in this case should not
+#'          be used for statistical inference.
+#'          However, if \code{type="norm"}, the confidence interval
+#'          may cross the values for no effect.
 #'          
 #'           When the reported statistics are close to their extremes,
 #'           or with small counts, 
@@ -55,7 +82,7 @@
 cohenG = 
   function(x, ci=FALSE, conf=0.95, type="perc",
            R=1000, histogram=FALSE, 
-           digits=3) {
+           digits=3, reportIncomplete=FALSE, ...) {
     
      n = nrow(x)
      m = ncol(x)
@@ -76,13 +103,13 @@ cohenG =
     if(n==2){
       b  = x[1,2]
       c  = x[2,1]
-      OR = max(b/c, c/b)
+      OR = b/c
       OR = signif(OR, digits=digits)
-      P  = max(b/(b+c), c/(c+b))
+      P  = b/(b+c)
       P  = signif(P, digits=digits)
       g  = P - 0.5
       g  = signif(g, digits=digits)
-      }
+    }
 
   Dimensions = paste(n, "x", n)
   
@@ -98,25 +125,52 @@ cohenG =
      Value       = c(OR, P, g)
      Dimensions  = rep(Dimensions, 3)
      
+          if(is.nan(OR) | is.nan(P) | is.nan(g)){
+              Value    = c(NaN, NaN, NaN)
+              lower.ci = c(NA, NA, NA)
+              upper.ci = c(NA, NA, NA)
+              V        = data.frame(Dimensions, Statistic, Value, 
+                                   lower.ci, upper.ci)
+              W        = list(V)
+              names(W) = c("Global.statistics")
+              return(W)
+              }
+     
     X = as.table(x)
     Counts = as.data.frame(X)
     Long = Counts[rep(row.names(Counts), Counts$Freq), c(1, 2)]
     rownames(Long) = seq(1:nrow(Long))
     
+    L1     = length(unique(droplevels(Long[,1])))
+    L2     = length(unique(droplevels(Long[,2])))
+    
     Function = function(input, index){
-                Input = input[index,]
+        Input = input[index,]
+                
+        NOTEQUAL=0
+        if(length(unique(droplevels(Input[,1]))) != L1 |
+           length(unique(droplevels(Input[,2]))) != L2){NOTEQUAL=1}
+             
+        if(NOTEQUAL==1){FLAG=1; return(c(NA,FLAG))}
+             
+        if(NOTEQUAL==0){
+                
                 Table = table(Input)
                 b  = Table[1,2]
                 c  = Table[2,1]
-                Stat = max(b/c, c/b)
-                return(Stat)}
+                Stat = b/c
+                FLAG = 0
+                return(c(Stat,FLAG))}
+    }
     
     Boot = boot(Long, Function, R=R)
     BCI  = boot.ci(Boot, conf=conf, type=type)
-    if(type=="norm") {CI1=BCI$normal[2];  CI2=BCI$normal[3];}
-    if(type=="basic"){CI1=BCI$basic[4];   CI2=BCI$basic[5];}
-    if(type=="perc") {CI1=BCI$percent[4]; CI2=BCI$percent[5];}
-    if(type=="bca")  {CI1=BCI$bca[4];     CI2=BCI$bca[5];}  
+    if(type=="norm") {CI1=BCI$normal[2];  CI2=BCI$normal[3]}
+    if(type=="basic"){CI1=BCI$basic[4];   CI2=BCI$basic[5]}
+    if(type=="perc") {CI1=BCI$percent[4]; CI2=BCI$percent[5]}
+    if(type=="bca")  {CI1=BCI$bca[4];     CI2=BCI$bca[5]}
+    
+    if(sum(Boot$t[,2])>0 & reportIncomplete==FALSE) {CI1=NA; CI2=NA}
   
     OR1=signif(CI1, digits=digits)
     OR2=signif(CI2, digits=digits)
@@ -124,19 +178,31 @@ cohenG =
     if(histogram==TRUE){hist(Boot$t[,1], col = "darkgray", xlab="OR", main="")}
     
     Function = function(input, index){
-                Input = input[index,]
+        Input = input[index,]
+                
+        NOTEQUAL=0
+        if(length(unique(droplevels(Input[,1]))) != L1 |
+           length(unique(droplevels(Input[,2]))) != L2){NOTEQUAL=1}
+             
+        if(NOTEQUAL==1){FLAG=1; return(c(NA,FLAG))}
+             
+        if(NOTEQUAL==0){
                 Table = table(Input)
                 b  = Table[1,2]
                 c  = Table[2,1]
-                Stat = max(b/(b+c), c/(c+b))
-                return(Stat)}
+                Stat = b/(b+c)
+                FLAG = 0
+                return(c(Stat,FLAG))}
+    }
     
     Boot = boot(Long, Function, R=R)
     BCI  = boot.ci(Boot, conf=conf, type=type)
-    if(type=="norm") {CI1=BCI$normal[2];  CI2=BCI$normal[3];}
-    if(type=="basic"){CI1=BCI$basic[4];   CI2=BCI$basic[5];}
-    if(type=="perc") {CI1=BCI$percent[4]; CI2=BCI$percent[5];}
-    if(type=="bca")  {CI1=BCI$bca[4];     CI2=BCI$bca[5];}
+    if(type=="norm") {CI1=BCI$normal[2];  CI2=BCI$normal[3]}
+    if(type=="basic"){CI1=BCI$basic[4];   CI2=BCI$basic[5]}
+    if(type=="perc") {CI1=BCI$percent[4]; CI2=BCI$percent[5]}
+    if(type=="bca")  {CI1=BCI$bca[4];     CI2=BCI$bca[5]}
+    
+    if(sum(Boot$t[,2])>0 & reportIncomplete==FALSE) {CI1=NA; CI2=NA}
     
     P1=signif(CI1, digits=digits)
     P2=signif(CI2, digits=digits)
@@ -201,6 +267,19 @@ cohenG =
   }
      
   if(n>2 & ci==TRUE){
+    
+           if(is.nan(OR) | is.nan(P) | is.nan(g)){
+               Statistic   = c("OR", "P", "g")
+               Value    = c(NaN, NaN, NaN)
+               lower.ci = c(NA, NA, NA)
+               upper.ci = c(NA, NA, NA)
+               V        = data.frame(Dimensions, Statistic, Value, 
+                                     lower.ci, upper.ci)
+               W        = list(V, Z)
+               names(W) = c("Global.statistics", "Pairwise.statistics")
+               return(W)
+              }
+
          Funny = function(x){
            k=0
            NUMERATOR = 0
@@ -214,14 +293,14 @@ cohenG =
              NUMERATOR   = NUMERATOR + max(b, c)
              DENOMINATOR = DENOMINATOR + min(b, c)
              DENOMINATOR1 = DENOMINATOR1 + b + c
-        }
-     }
-     OR = NUMERATOR / DENOMINATOR
-     P  = NUMERATOR / DENOMINATOR1
-     g  = P - 0.5
-     Output = c(OR, P, g)
-     names(Output) = c("OR", "P", "g")
-     return(Output)
+             }
+           }
+          OR = NUMERATOR / DENOMINATOR
+          P  = NUMERATOR / DENOMINATOR1
+          g  = P - 0.5
+          Output = c(OR, P, g)
+          names(Output) = c("OR", "P", "g")
+          return(Output)
          }
   
   X = as.table(x)
@@ -229,36 +308,63 @@ cohenG =
     Long = Counts[rep(row.names(Counts), Counts$Freq), c(1, 2)]
     rownames(Long) = seq(1:nrow(Long))
     
+        L1     = length(unique(droplevels(Long[,1])))
+        L2     = length(unique(droplevels(Long[,2])))
+    
     Function = function(input, index){
                 Input = input[index,]
+                
+          NOTEQUAL=0
+          if(length(unique(droplevels(Input[,1]))) != L1 |
+             length(unique(droplevels(Input[,2]))) != L2){NOTEQUAL=1}
+             
+          if(NOTEQUAL==1){FLAG=1; return(c(NA,FLAG))}
+             
+          if(NOTEQUAL==0){
                 Table = table(Input)
                 Stat = Funny(Table)[1]
-                return(Stat)}
+                FLAG=0
+                return(c(Stat,FLAG))}
+    }
     
     Boot = boot(Long, Function, R=R)
     BCI  = boot.ci(Boot, conf=conf, type=type)
-    if(type=="norm") {CI1=BCI$normal[2];  CI2=BCI$normal[3];}
-    if(type=="basic"){CI1=BCI$basic[4];   CI2=BCI$basic[5];}
-    if(type=="perc") {CI1=BCI$percent[4]; CI2=BCI$percent[5];}
-    if(type=="bca")  {CI1=BCI$bca[4];     CI2=BCI$bca[5];}  
+    if(type=="norm") {CI1=BCI$normal[2];  CI2=BCI$normal[3]}
+    if(type=="basic"){CI1=BCI$basic[4];   CI2=BCI$basic[5]}
+    if(type=="perc") {CI1=BCI$percent[4]; CI2=BCI$percent[5]}
+    if(type=="bca")  {CI1=BCI$bca[4];     CI2=BCI$bca[5]}  
   
+    if(sum(Boot$t[,2])>0 & reportIncomplete==FALSE) {CI1=NA; CI2=NA}
+    
     OR1=signif(CI1, digits=digits)
     OR2=signif(CI2, digits=digits)
     
     if(histogram==TRUE){hist(Boot$t[,1], col = "darkgray", xlab="OR", main="")}
     
   Function = function(input, index){
-                Input = input[index,]
+        Input = input[index,]
+                
+        NOTEQUAL=0
+        if(length(unique(droplevels(Input[,1]))) != L1 |
+           length(unique(droplevels(Input[,2]))) != L2){NOTEQUAL=1}
+        
+        if(NOTEQUAL==1){FLAG=1; return(c(NA,FLAG))}
+                
+        if(NOTEQUAL==0){
                 Table = table(Input)
                 Stat = Funny(Table)[2]
-                return(Stat)}
+                FLAG = 0
+                return(c(Stat,FLAG))}
+  }
     
     Boot = boot(Long, Function, R=R)
     BCI  = boot.ci(Boot, conf=conf, type=type)
-    if(type=="norm") {CI1=BCI$normal[2];  CI2=BCI$normal[3];}
-    if(type=="basic"){CI1=BCI$basic[4];   CI2=BCI$basic[5];}
-    if(type=="perc") {CI1=BCI$percent[4]; CI2=BCI$percent[5];}
-    if(type=="bca")  {CI1=BCI$bca[4];     CI2=BCI$bca[5];}  
+    if(type=="norm") {CI1=BCI$normal[2];  CI2=BCI$normal[3]}
+    if(type=="basic"){CI1=BCI$basic[4];   CI2=BCI$basic[5]}
+    if(type=="perc") {CI1=BCI$percent[4]; CI2=BCI$percent[5]}
+    if(type=="bca")  {CI1=BCI$bca[4];     CI2=BCI$bca[5]}
+    
+    if(sum(Boot$t[,2])>0 & reportIncomplete==FALSE) {CI1=NA; CI2=NA}
   
     P1=signif(CI1, digits=digits)
     P2=signif(CI2, digits=digits)

@@ -4,9 +4,20 @@
 \alias{cliffDelta}
 \title{Cliff's delta}
 \usage{
-cliffDelta(formula = NULL, data = NULL, x = NULL, y = NULL,
-  ci = FALSE, conf = 0.95, type = "perc", R = 1000,
-  histogram = FALSE, digits = 3, ...)
+cliffDelta(
+  formula = NULL,
+  data = NULL,
+  x = NULL,
+  y = NULL,
+  ci = FALSE,
+  conf = 0.95,
+  type = "perc",
+  R = 1000,
+  histogram = FALSE,
+  digits = 3,
+  reportIncomplete = FALSE,
+  ...
+)
 }
 \arguments{
 \item{formula}{A formula indicating the response variable and
@@ -33,6 +44,11 @@ Passed to \code{boot.ci}.}
 \item{histogram}{If \code{TRUE}, produces a histogram of bootstrapped values.}
 
 \item{digits}{The number of significant digits in the output.}
+
+\item{reportIncomplete}{If \code{FALSE} (the default),
+\code{NA} will be reported in cases where there
+are instances of the calculation of the statistic
+failing during the bootstrap procedure.}
 
 \item{...}{Additional arguments passed to the \code{wilcox.test} function.}
 }
@@ -64,8 +80,16 @@ Cliff's delta is an effect size statistic appropriate
           Currently, the function makes no provisions for \code{NA}
           values in the data.  It is recommended that \code{NA}s be removed
           beforehand.
+          
+          When the data in the first group are greater than
+          in the second group, Cliff's delta is positive.
+          When the data in the second group are greater than
+          in the first group, Cliff's delta is negative.
+          Be cautious with this interpretation, as R will alphabetize
+          groups in the formula interface if the grouping variable
+          is not already a factor.
 
-          When Cliff's delta is close to 0 or close to 1,
+          When Cliff's delta is close to 1 or close to -1,
           or with small sample size,
           the confidence intervals 
           determined by this

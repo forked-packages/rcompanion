@@ -4,8 +4,19 @@
 \alias{epsilonSquared}
 \title{Epsilon-squared}
 \usage{
-epsilonSquared(x, g = NULL, group = "row", ci = FALSE, conf = 0.95,
-  type = "perc", R = 1000, histogram = FALSE, digits = 3, ...)
+epsilonSquared(
+  x,
+  g = NULL,
+  group = "row",
+  ci = FALSE,
+  conf = 0.95,
+  type = "perc",
+  R = 1000,
+  histogram = FALSE,
+  digits = 3,
+  reportIncomplete = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{Either a two-way table or a two-way matrix.
@@ -34,6 +45,11 @@ Passed to \code{boot.ci}.}
 
 \item{digits}{The number of significant digits in the output.}
 
+\item{reportIncomplete}{If \code{FALSE} (the default),
+\code{NA} will be reported in cases where there
+are instances of the calculation of the statistic
+failing during the bootstrap procedure.}
+
 \item{...}{Additional arguments passed to the \code{kruskal.test} function.}
 }
 \value{
@@ -42,9 +58,12 @@ A single statistic, epsilon-squared.
         and the lower and upper confidence limits.
 }
 \description{
-Calculates epsilon-squared for a table with one ordinal
-             variable and one nominal variable; confidence intervals
-             by bootstrap.
+Calculates epsilon-squared 
+             as an effect size statistic,
+             following a Kruskal-Wallis test, 
+             or for a table with one ordinal
+             variable and one nominal variable; 
+             confidence intervals by bootstrap
 }
 \details{
 Epsilon-squared is used as a measure of association
@@ -54,6 +73,13 @@ Epsilon-squared is used as a measure of association
           Currently, the function makes no provisions for \code{NA}
           values in the data.  It is recommended that \code{NA}s be removed
           beforehand.
+          
+          Because epsilon-squared is always positive, 
+          if \code{type="perc"}, the confidence interval will
+          never cross zero, and should not
+          be used for statistical inference.
+          However, if \code{type="norm"}, the confidence interval
+          may cross zero. 
           
           When epsilon-squared is close to 0 or very large,
           or with small counts in some cells,

@@ -4,9 +4,20 @@
 \alias{cramerV}
 \title{Cramer's V (phi)}
 \usage{
-cramerV(x, y = NULL, ci = FALSE, conf = 0.95, type = "perc",
-  R = 1000, histogram = FALSE, digits = 4, bias.correct = FALSE,
-  ...)
+cramerV(
+  x,
+  y = NULL,
+  ci = FALSE,
+  conf = 0.95,
+  type = "perc",
+  R = 1000,
+  histogram = FALSE,
+  digits = 4,
+  bias.correct = FALSE,
+  reportIncomplete = FALSE,
+  verbose = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{Either a two-way table or a two-way matrix.
@@ -34,6 +45,13 @@ Passed to \code{boot.ci}.}
 
 \item{bias.correct}{If \code{TRUE}, a bias correction is applied.}
 
+\item{reportIncomplete}{If \code{FALSE} (the default),
+\code{NA} will be reported in cases where there
+are instances of the calculation of the statistic
+failing during the bootstrap procedure.}
+
+\item{verbose}{If \code{TRUE}, prints additional statistics.}
+
 \item{...}{Additional arguments passed to \code{chisq.test}.}
 }
 \value{
@@ -51,6 +69,14 @@ Cramer's V is used as a measure of association
           for a chi-square test of association.  For a 2 x 2 table,
           the absolute value of the phi statistic is the same as
           Cramer's V.
+          
+          Because V is always positive, if \code{type="perc"},
+          the confidence interval will
+          never cross zero. In this case, 
+          the confidence interval range should not
+          be used for statistical inference.
+          However, if \code{type="norm"}, the confidence interval
+          may cross zero.  
           
           When V is close to 0 or very large,
           or with small counts, 

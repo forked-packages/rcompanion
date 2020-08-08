@@ -1,8 +1,11 @@
 #' @title Epsilon-squared
 #'
-#' @description Calculates epsilon-squared for a table with one ordinal
-#'              variable and one nominal variable; confidence intervals
-#'              by bootstrap.
+#' @description Calculates epsilon-squared 
+#'              as an effect size statistic,
+#'              following a Kruskal-Wallis test, 
+#'              or for a table with one ordinal
+#'              variable and one nominal variable; 
+#'              confidence intervals by bootstrap
 #' 
 #' @param x Either a two-way table or a two-way matrix.
 #'          Can also be a vector of observations of an ordinal variable.
@@ -21,6 +24,10 @@
 #' @param R The number of replications to use for bootstrap.
 #' @param histogram If \code{TRUE}, produces a histogram of bootstrapped values.
 #' @param digits The number of significant digits in the output.
+#' @param reportIncomplete If \code{FALSE} (the default),
+#'                         \code{NA} will be reported in cases where there
+#'                         are instances of the calculation of the statistic
+#'                         failing during the bootstrap procedure.
 #' @param ... Additional arguments passed to the \code{kruskal.test} function.             
 #' 
 #' @details  Epsilon-squared is used as a measure of association
@@ -30,6 +37,13 @@
 #'           Currently, the function makes no provisions for \code{NA}
 #'           values in the data.  It is recommended that \code{NA}s be removed
 #'           beforehand.
+#'           
+#'           Because epsilon-squared is always positive, 
+#'           if \code{type="perc"}, the confidence interval will
+#'           never cross zero, and should not
+#'           be used for statistical inference.
+#'           However, if \code{type="norm"}, the confidence interval
+#'           may cross zero. 
 #'           
 #'           When epsilon-squared is close to 0 or very large,
 #'           or with small counts in some cells,
@@ -67,7 +81,9 @@
  
 epsilonSquared = function (x, g=NULL, group="row", ci=FALSE, conf=0.95, 
                            type="perc",
-                           R=1000, histogram=FALSE, digits=3, ... ){
+                           R=1000, histogram=FALSE, digits=3, 
+                           reportIncomplete=FALSE,
+                           ... ){
   
   if(is.matrix(x)){x=as.table(x)}
   
@@ -92,27 +108,35 @@ epsilonSquared = function (x, g=NULL, group="row", ci=FALSE, conf=0.95,
   e2 = KW$statistic / (n-1)
   E2 = signif(e2, digits=digits)
   
-  
 if(ci==TRUE){
   Data = data.frame(x,g)
   Function = function(input, index){
                       Input = input[index,]
                       n  = length(Input$g)
-                      KW = kruskal.test(Input$x, Input$g)
-                      e2 = KW$statistic / (n-1)
-                    return(e2)}
+                      if(length(unique(droplevels(Input$g)))==1){
+                         FLAG=1
+                         return(c(NA,FLAG))}  
+                      if(length(unique(droplevels(Input$g)))>1){
+                         KW = kruskal.test(Input$x, Input$g, ...)
+                         e2 = KW$statistic / (n-1)
+                         FLAG=0
+                         return(c(e2, FLAG))
+                    }}
   Boot = boot(Data, Function, R=R)
+  
   BCI  = boot.ci(Boot, conf=conf, type=type)
-  if(type=="norm") {CI1=BCI$normal[2];  CI2=BCI$normal[3];}
-  if(type=="basic"){CI1=BCI$basic[4];   CI2=BCI$basic[5];}
-  if(type=="perc") {CI1=BCI$percent[4]; CI2=BCI$percent[5];}
-  if(type=="bca") {CI1=BCI$bca[4];      CI2=BCI$bca[5];}  
+  if(type=="norm") {CI1=BCI$normal[2];  CI2=BCI$normal[3]}
+  if(type=="basic"){CI1=BCI$basic[4];   CI2=BCI$basic[5]}
+  if(type=="perc") {CI1=BCI$percent[4]; CI2=BCI$percent[5]}
+  if(type=="bca")  {CI1=BCI$bca[4];     CI2=BCI$bca[5]}  
+  
+  if(sum(Boot$t[,2])>0 & reportIncomplete==FALSE) {CI1=NA; CI2=NA} 
   
   CI1=signif(CI1, digits=digits)
   CI2=signif(CI2, digits=digits)
   
-  if(histogram==TRUE){hist(Boot$t[,1], col = "darkgray")}
-  
+  if(histogram==TRUE){hist(Boot$t[,1], col = "darkgray", xlab="epsilon-squared",
+                                       main="")}
 }
   
 if(ci==FALSE){names(E2) = "epsilon.squared"; return(E2)}

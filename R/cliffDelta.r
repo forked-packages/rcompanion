@@ -18,6 +18,10 @@
 #' @param R The number of replications to use for bootstrap.
 #' @param histogram If \code{TRUE}, produces a histogram of bootstrapped values.
 #' @param digits The number of significant digits in the output.
+#' @param reportIncomplete If \code{FALSE} (the default),
+#'                         \code{NA} will be reported in cases where there
+#'                         are instances of the calculation of the statistic
+#'                         failing during the bootstrap procedure.
 #' @param ... Additional arguments passed to the \code{wilcox.test} function. 
 #'             
 #' @details Cliff's delta is an effect size statistic appropriate
@@ -38,8 +42,16 @@
 #'           Currently, the function makes no provisions for \code{NA}
 #'           values in the data.  It is recommended that \code{NA}s be removed
 #'           beforehand.
+#'           
+#'           When the data in the first group are greater than
+#'           in the second group, Cliff's delta is positive.
+#'           When the data in the second group are greater than
+#'           in the first group, Cliff's delta is negative.
+#'           Be cautious with this interpretation, as R will alphabetize
+#'           groups in the formula interface if the grouping variable
+#'           is not already a factor.
 #'
-#'           When Cliff's delta is close to 0 or close to 1,
+#'           When Cliff's delta is close to 1 or close to -1,
 #'           or with small sample size,
 #'           the confidence intervals 
 #'           determined by this
@@ -71,11 +83,12 @@
 cliffDelta = 
  function(formula=NULL, data=NULL, x=NULL, y=NULL, 
           ci=FALSE, conf=0.95, type="perc", R=1000, histogram=FALSE, digits=3,
+          reportIncomplete=FALSE,
           ...){
 
   if(!is.null(formula)){
     x  = eval(parse(text=paste0("data","$",all.vars(formula[[2]])[1])))
-    g  = eval(parse(text=paste0("data","$",all.vars(formula[[3]])[1])))
+    g  = factor(eval(parse(text=paste0("data","$",all.vars(formula[[3]])[1]))))
     A  = x[g==levels(g)[1]]
     B  = x[g==levels(g)[2]]
   }
@@ -84,7 +97,7 @@ cliffDelta =
    A = x
    B = y
    x = c(A, B)
-   g = c(rep("A", length(A)), rep("B", length(B)))
+   g = factor(c(rep("A", length(A)), rep("B", length(B))))
   }
    
   n1  = length(A)
@@ -98,19 +111,26 @@ cliffDelta =
   Data = data.frame(x,g)
   Function = function(input, index){
                     Input = input[index,]
-                    U = suppressWarnings(wilcox.test(x ~ g, 
-                                         data=Input, ...))$statistic
-                    n1  = length(Input$x[Input$g==levels(Input$g)[1]])
-                    n2  = length(Input$x[Input$g==levels(Input$g)[2]])
-                    p   = U / (n1 * n2)
-                    cd  = (p-0.5)*2
-                    return(cd)}
+                    if(length(unique(droplevels(Input$g)))==1){
+                       FLAG=1
+                       return(c(NA,FLAG))}  
+                    if(length(unique(droplevels(Input$g)))>1){
+                       U = suppressWarnings(wilcox.test(x ~ g, 
+                                            data=Input, ...))$statistic
+                       n1  = length(Input$x[Input$g==levels(Input$g)[1]])
+                       n2  = length(Input$x[Input$g==levels(Input$g)[2]])
+                       p   = U / (n1 * n2)
+                       cd  = (p-0.5)*2
+                       FLAG=0
+                       return(c(cd, FLAG))}}
   Boot = boot(Data, Function, R=R)
   BCI  = boot.ci(Boot, conf=conf, type=type)
   if(type=="norm") {CI1=BCI$normal[2];  CI2=BCI$normal[3];}
   if(type=="basic"){CI1=BCI$basic[4];   CI2=BCI$basic[5];}
   if(type=="perc") {CI1=BCI$percent[4]; CI2=BCI$percent[5];}
-  if(type=="bca") {CI1=BCI$bca[4];      CI2=BCI$bca[5];}  
+  if(type=="bca") {CI1=BCI$bca[4];      CI2=BCI$bca[5];}
+  
+   if(sum(Boot$t[,2])>0 & reportIncomplete==FALSE) {CI1=NA; CI2=NA} 
   
   CI1=signif(CI1, digits=digits)
   CI2=signif(CI2, digits=digits)

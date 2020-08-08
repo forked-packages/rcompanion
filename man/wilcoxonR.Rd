@@ -4,12 +4,24 @@
 \alias{wilcoxonR}
 \title{r effect size for Wilcoxon two-sample rank-sum test}
 \usage{
-wilcoxonR(x, g = NULL, group = "row", ci = FALSE, conf = 0.95,
-  type = "perc", R = 1000, histogram = FALSE, digits = 3, ...)
+wilcoxonR(
+  x,
+  g = NULL,
+  group = "row",
+  coin = FALSE,
+  ci = FALSE,
+  conf = 0.95,
+  type = "perc",
+  R = 1000,
+  histogram = FALSE,
+  digits = 3,
+  reportIncomplete = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{Either a two-way table or a two-way matrix.
-Can also be a vector of observations of an ordinal variable.}
+Can also be a vector of observations.}
 
 \item{g}{If \code{x} is a vector, \code{g} is the vector of observations for
 the grouping, nominal variable.
@@ -18,6 +30,14 @@ Only the first two levels of the nominal variable are used.}
 \item{group}{If \code{x} is a table or matrix, \code{group} indicates whether
 the \code{"row"} or the \code{"column"} variable is
 the nominal, grouping variable.}
+
+\item{coin}{If \code{FALSE}, the default, the Z value
+is extracted from a function similar to the
+\code{wilcox.test} function in the stats package.
+If \code{TRUE}, the Z value
+is extracted from the \code{wilcox_test} function in the
+coin package.  This method may be much slower, especially
+if a confidence interval is produced.}
 
 \item{ci}{If \code{TRUE}, returns confidence intervals by bootstrap.
 May be slow.}
@@ -35,6 +55,11 @@ Passed to \code{boot.ci}.}
 
 \item{digits}{The number of significant digits in the output.}
 
+\item{reportIncomplete}{If \code{FALSE} (the default),
+\code{NA} will be reported in cases where there
+are instances of the calculation of the statistic
+failing during the bootstrap procedure.}
+
 \item{...}{Additional arguments passed to the \code{wilcox_test} function.}
 }
 \value{
@@ -44,21 +69,33 @@ A single statistic, r.
 }
 \description{
 Calculates r effect size
-             for Mann-Whitney, two-sample rank-sum test,
+             for Mann-Whitney two-sample rank-sum test,
              or a table with an ordinal variable and a
              nominal variable with two levels; confidence intervals
              by bootstrap.
 }
 \details{
-A Z value is extracted from the \code{wilcox_test} function in the
-          coin package.  r  is calculated as Z divided by 
+r  is calculated as Z divided by 
           square root of the total observations.
+          
+          This statistic reports a smaller effect size than does
+          Glass rank biserial correlation coefficient 
+          (\code{wilcoxonRG}), and cannot reach 
+          -1 or 1.  This effect is exaserbated when sample sizes
+          are not equal.
  
           Currently, the function makes no provisions for \code{NA}
           values in the data.  It is recommended that \code{NA}s be removed
           beforehand.
           
-          When r is close to 0 or very large,
+          When the data in the first group are greater than
+          in the second group, r is positive.
+          When the data in the second group are greater than
+          in the first group, r is negative.
+          Be cautious with this interpretation, as R will alphabetize
+          groups if \code{g} is not already a factor.
+          
+          When r is close to extremes,
           or with small counts in some cells,
           the confidence intervals 
           determined by this
@@ -80,7 +117,7 @@ wilcoxonR(x = Catbus$Steps, g = Catbus$Sex)
 \url{http://rcompanion.org/handbook/F_04.html}
 }
 \seealso{
-\code{\link{freemanTheta}}
+\code{\link{freemanTheta}, \link{wilcoxonRG}}
 }
 \author{
 Salvatore Mangiafico, \email{mangiafico@njaes.rutgers.edu}
