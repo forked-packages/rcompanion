@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcompanion</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.26</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -114,20 +114,20 @@
              percentiles, or proportion below a threshold value.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>percentileTest</span>(
-  <span class='kw'>formula</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>tau</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fl'>7</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>comparison</span> <span class='kw'>=</span> <span class='st'>"&lt;"</span>,
-  <span class='kw'>r</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>4</span>,
-  <span class='kw'>progress</span> <span class='kw'>=</span> <span class='st'>"TRUE"</span>
-)</pre>
+    <pre class="usage"><span class='fu'>percentileTest</span><span class='op'>(</span>
+  formula <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  x <span class='op'>=</span> <span class='cn'>NULL</span>,
+  y <span class='op'>=</span> <span class='cn'>NULL</span>,
+  test <span class='op'>=</span> <span class='st'>"median"</span>,
+  tau <span class='op'>=</span> <span class='fl'>0.5</span>,
+  type <span class='op'>=</span> <span class='fl'>7</span>,
+  threshold <span class='op'>=</span> <span class='cn'>NA</span>,
+  comparison <span class='op'>=</span> <span class='st'>"&lt;"</span>,
+  r <span class='op'>=</span> <span class='fl'>1000</span>,
+  digits <span class='op'>=</span> <span class='fl'>4</span>,
+  progress <span class='op'>=</span> <span class='st'>"TRUE"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,7 +179,7 @@ different in the proportion of observations below $10,000,
       <th>comparison</th>
       <td><p>If <code>"proportion"</code> is chosen as the <code>test</code>,
 <code>comparison</code> indicates the inequality to use.  Options are
-<code>"&lt;"</code>, <code>"&lt;="</code>, <code>"&gt;"</code>, <code>"&gt;="</code>, or , <code><a href='https://rdrr.io/r/base/Comparison.html'>"=="</a></code></p></td>
+<code>"&lt;"</code>, <code>"&lt;="</code>, <code>"&gt;"</code>, <code>"&gt;="</code>, or , <code>"=="</code></p></td>
     </tr>
     <tr>
       <th>r</th>
@@ -224,12 +224,16 @@ progress while conducting the test.</p></td>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p><a href='http://rcompanion.org/handbook/F_15.html'>http://rcompanion.org/handbook/F_15.html</a></p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Salvatore Mangiafico, <a href='mailto:mangiafico@njaes.rutgers.edu'>mangiafico@njaes.rutgers.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>BrendonSmall</span>)
-<span class='fu'>percentileTest</span>(<span class='no'>Sodium</span> ~ <span class='no'>Instructor</span>,
-               <span class='kw'>data</span><span class='kw'>=</span><span class='no'>BrendonSmall</span>,
-               <span class='kw'>test</span><span class='kw'>=</span><span class='st'>"median"</span>)</div><div class='output co'>#&gt; ....................................................................................................
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>BrendonSmall</span><span class='op'>)</span>
+<span class='fu'>percentileTest</span><span class='op'>(</span><span class='va'>Sodium</span> <span class='op'>~</span> <span class='va'>Instructor</span>, 
+               data<span class='op'>=</span><span class='va'>BrendonSmall</span>, 
+               test<span class='op'>=</span><span class='st'>"median"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ....................................................................................................
 #&gt; </div><div class='output co'>#&gt; $Test
 #&gt;               Formula         Data   Test
 #&gt; 1 Sodium ~ Instructor BrendonSmall median
@@ -243,10 +247,11 @@ progress while conducting the test.</p></td>
 #&gt;           p.value
 #&gt; 1 p-value   0.573
 #&gt; </div><div class='input'>
-<span class='fu'>percentileTest</span>(<span class='no'>Sodium</span> ~ <span class='no'>Instructor</span>,
-               <span class='kw'>data</span><span class='kw'>=</span><span class='no'>BrendonSmall</span>,
-               <span class='kw'>test</span><span class='kw'>=</span><span class='st'>"percentile"</span>,
-               <span class='kw'>tau</span> <span class='kw'>=</span> <span class='fl'>0.75</span>)</div><div class='output co'>#&gt; ....................................................................................................
+<span class='fu'>percentileTest</span><span class='op'>(</span><span class='va'>Sodium</span> <span class='op'>~</span> <span class='va'>Instructor</span>, 
+               data<span class='op'>=</span><span class='va'>BrendonSmall</span>, 
+               test<span class='op'>=</span><span class='st'>"percentile"</span>, 
+               tau <span class='op'>=</span> <span class='fl'>0.75</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ....................................................................................................
 #&gt; </div><div class='output co'>#&gt; $Test
 #&gt;               Formula         Data       Test  tau
 #&gt; 1 Sodium ~ Instructor BrendonSmall percentile 0.75
@@ -260,10 +265,11 @@ progress while conducting the test.</p></td>
 #&gt;           p.value
 #&gt; 1 p-value   0.448
 #&gt; </div><div class='input'>
-<span class='fu'>percentileTest</span>(<span class='no'>Sodium</span> ~ <span class='no'>Instructor</span>,
-               <span class='kw'>data</span><span class='kw'>=</span><span class='no'>BrendonSmall</span>,
-               <span class='kw'>test</span><span class='kw'>=</span><span class='st'>"proportion"</span>,
-               <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>1300</span>)</div><div class='output co'>#&gt; ....................................................................................................
+<span class='fu'>percentileTest</span><span class='op'>(</span><span class='va'>Sodium</span> <span class='op'>~</span> <span class='va'>Instructor</span>, 
+               data<span class='op'>=</span><span class='va'>BrendonSmall</span>, 
+               test<span class='op'>=</span><span class='st'>"proportion"</span>, 
+               threshold <span class='op'>=</span> <span class='fl'>1300</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ....................................................................................................
 #&gt; </div><div class='output co'>#&gt; $Test
 #&gt;               Formula         Data       Test
 #&gt; 1 Sodium ~ Instructor BrendonSmall proportion
@@ -296,7 +302,7 @@ progress while conducting the test.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcompanion</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.26</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -112,14 +112,14 @@
     <p>Calculates sums for groups.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>groupwiseSum</span>(
-  <span class='kw'>formula</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>var</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>groupwiseSum</span><span class='op'>(</span>
+  formula <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  var <span class='op'>=</span> <span class='cn'>NULL</span>,
+  group <span class='op'>=</span> <span class='cn'>NULL</span>,
+  digits <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -174,21 +174,26 @@ rounding of values.</p></td>
     <div class='dont-index'><p><code><a href='groupwiseMean.html'>groupwiseMean</a></code>, <code><a href='groupwiseMedian.html'>groupwiseMedian</a></code>,
          <code><a href='groupwiseHuber.html'>groupwiseHuber</a></code>,
          <code><a href='groupwiseGeometric.html'>groupwiseGeometric</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Salvatore Mangiafico, <a href='mailto:mangiafico@njaes.rutgers.edu'>mangiafico@njaes.rutgers.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### Example with formula notation</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>AndersonBias</span>)
-<span class='fu'>groupwiseSum</span>(<span class='no'>Count</span> ~ <span class='no'>Result</span> + <span class='no'>Sex</span>,
-             <span class='kw'>data</span>        <span class='kw'>=</span> <span class='no'>AndersonBias</span>)</div><div class='output co'>#&gt;   Result    Sex n Sum
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>AndersonBias</span><span class='op'>)</span>
+<span class='fu'>groupwiseSum</span><span class='op'>(</span><span class='va'>Count</span> <span class='op'>~</span> <span class='va'>Result</span> <span class='op'>+</span> <span class='va'>Sex</span>,
+             data        <span class='op'>=</span> <span class='va'>AndersonBias</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   Result    Sex n Sum
 #&gt; 1   Pass Female 4  44
 #&gt; 2   Pass   Male 4  49
 #&gt; 3   Fail Female 4  24
-#&gt; 4   Fail   Male 4  64</div><div class='input'>
+#&gt; 4   Fail   Male 4  64</div><div class='input'>                
 <span class='co'>### Example with variable notation</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>AndersonBias</span>)
-<span class='fu'>groupwiseSum</span>(<span class='kw'>data</span>        <span class='kw'>=</span> <span class='no'>AndersonBias</span>,
-             <span class='kw'>var</span>         <span class='kw'>=</span> <span class='st'>"Count"</span>,
-             <span class='kw'>group</span>       <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Result"</span>, <span class='st'>"Sex"</span>))</div><div class='output co'>#&gt;   Result    Sex n Sum
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>AndersonBias</span><span class='op'>)</span>
+<span class='fu'>groupwiseSum</span><span class='op'>(</span>data        <span class='op'>=</span> <span class='va'>AndersonBias</span>,
+             var         <span class='op'>=</span> <span class='st'>"Count"</span>,
+             group       <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Result"</span>, <span class='st'>"Sex"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   Result    Sex n Sum
 #&gt; 1   Pass Female 4  44
 #&gt; 2   Pass   Male 4  49
 #&gt; 3   Fail Female 4  24
@@ -209,7 +214,7 @@ rounding of values.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

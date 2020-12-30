@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcompanion</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.26</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -114,7 +114,7 @@
              likelihood ratio tests.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>pairwiseModelAnova</span>(<span class='no'>fits</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>pairwiseModelAnova</span><span class='op'>(</span><span class='va'>fits</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,23 +143,27 @@
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='compareGLM.html'>compareGLM</a></code>, <code><a href='compareLM.html'>compareLM</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Salvatore Mangiafico, <a href='mailto:mangiafico@njaes.rutgers.edu'>mangiafico@njaes.rutgers.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### Compare among polynomial models</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>BrendonSmall</span>)
-<span class='no'>BrendonSmall</span>$<span class='no'>Calories</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='no'>BrendonSmall</span>$<span class='no'>Calories</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>BrendonSmall</span><span class='op'>)</span>
+<span class='va'>BrendonSmall</span><span class='op'>$</span><span class='va'>Calories</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>BrendonSmall</span><span class='op'>$</span><span class='va'>Calories</span><span class='op'>)</span>
 
-<span class='no'>BrendonSmall</span>$<span class='no'>Calories2</span> <span class='kw'>=</span> <span class='no'>BrendonSmall</span>$<span class='no'>Calories</span> * <span class='no'>BrendonSmall</span>$<span class='no'>Calories</span>
-<span class='no'>BrendonSmall</span>$<span class='no'>Calories3</span> <span class='kw'>=</span> <span class='no'>BrendonSmall</span>$<span class='no'>Calories</span> * <span class='no'>BrendonSmall</span>$<span class='no'>Calories</span> *
-                         <span class='no'>BrendonSmall</span>$<span class='no'>Calories</span>
-<span class='no'>BrendonSmall</span>$<span class='no'>Calories4</span> <span class='kw'>=</span> <span class='no'>BrendonSmall</span>$<span class='no'>Calories</span> * <span class='no'>BrendonSmall</span>$<span class='no'>Calories</span> *
-                         <span class='no'>BrendonSmall</span>$<span class='no'>Calories</span> * <span class='no'>BrendonSmall</span>$<span class='no'>Calories</span>
-<span class='no'>model.1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sodium</span> ~ <span class='no'>Calories</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BrendonSmall</span>)
-<span class='no'>model.2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sodium</span> ~ <span class='no'>Calories</span> + <span class='no'>Calories2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BrendonSmall</span>)
-<span class='no'>model.3</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sodium</span> ~ <span class='no'>Calories</span> + <span class='no'>Calories2</span> + <span class='no'>Calories3</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BrendonSmall</span>)
-<span class='no'>model.4</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sodium</span> ~ <span class='no'>Calories</span> + <span class='no'>Calories2</span> + <span class='no'>Calories3</span> + <span class='no'>Calories4</span>,
-             <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BrendonSmall</span>)
-<span class='fu'>pairwiseModelAnova</span>(<span class='no'>model.1</span>, <span class='no'>model.2</span>, <span class='no'>model.3</span>, <span class='no'>model.4</span>)</div><div class='output co'>#&gt; $Models
+<span class='va'>BrendonSmall</span><span class='op'>$</span><span class='va'>Calories2</span> <span class='op'>=</span> <span class='va'>BrendonSmall</span><span class='op'>$</span><span class='va'>Calories</span> <span class='op'>*</span> <span class='va'>BrendonSmall</span><span class='op'>$</span><span class='va'>Calories</span>
+<span class='va'>BrendonSmall</span><span class='op'>$</span><span class='va'>Calories3</span> <span class='op'>=</span> <span class='va'>BrendonSmall</span><span class='op'>$</span><span class='va'>Calories</span> <span class='op'>*</span> <span class='va'>BrendonSmall</span><span class='op'>$</span><span class='va'>Calories</span> <span class='op'>*</span> 
+                         <span class='va'>BrendonSmall</span><span class='op'>$</span><span class='va'>Calories</span>
+<span class='va'>BrendonSmall</span><span class='op'>$</span><span class='va'>Calories4</span> <span class='op'>=</span> <span class='va'>BrendonSmall</span><span class='op'>$</span><span class='va'>Calories</span> <span class='op'>*</span> <span class='va'>BrendonSmall</span><span class='op'>$</span><span class='va'>Calories</span> <span class='op'>*</span> 
+                         <span class='va'>BrendonSmall</span><span class='op'>$</span><span class='va'>Calories</span> <span class='op'>*</span> <span class='va'>BrendonSmall</span><span class='op'>$</span><span class='va'>Calories</span>
+<span class='va'>model.1</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sodium</span> <span class='op'>~</span> <span class='va'>Calories</span>, data <span class='op'>=</span> <span class='va'>BrendonSmall</span><span class='op'>)</span>
+<span class='va'>model.2</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sodium</span> <span class='op'>~</span> <span class='va'>Calories</span> <span class='op'>+</span> <span class='va'>Calories2</span>, data <span class='op'>=</span> <span class='va'>BrendonSmall</span><span class='op'>)</span>
+<span class='va'>model.3</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sodium</span> <span class='op'>~</span> <span class='va'>Calories</span> <span class='op'>+</span> <span class='va'>Calories2</span> <span class='op'>+</span> <span class='va'>Calories3</span>, data <span class='op'>=</span> <span class='va'>BrendonSmall</span><span class='op'>)</span>
+<span class='va'>model.4</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sodium</span> <span class='op'>~</span> <span class='va'>Calories</span> <span class='op'>+</span> <span class='va'>Calories2</span> <span class='op'>+</span> <span class='va'>Calories3</span> <span class='op'>+</span> <span class='va'>Calories4</span>,
+             data <span class='op'>=</span> <span class='va'>BrendonSmall</span><span class='op'>)</span>
+<span class='fu'>pairwiseModelAnova</span><span class='op'>(</span><span class='va'>model.1</span>, <span class='va'>model.2</span>, <span class='va'>model.3</span>, <span class='va'>model.4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $Models
 #&gt;                                                   Model
 #&gt; 1                                     Sodium ~ Calories
 #&gt; 2                         Sodium ~ Calories + Calories2
@@ -205,7 +209,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

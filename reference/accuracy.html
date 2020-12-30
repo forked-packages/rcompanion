@@ -76,7 +76,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcompanion</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.26</span>
       </span>
     </div>
 
@@ -84,7 +84,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -118,7 +118,7 @@
     <p>Produces a table of fit statistics for multiple models.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>accuracy</span>(<span class='no'>fits</span>, <span class='kw'>plotit</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>accuracy</span><span class='op'>(</span><span class='va'>fits</span>, plotit <span class='op'>=</span> <span class='cn'>TRUE</span>, digits <span class='op'>=</span> <span class='fl'>3</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -191,21 +191,25 @@ vs. the actual values for each model.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='compareLM.html'>compareLM</a></code>, <code><a href='compareGLM.html'>compareGLM</a></code>, <code><a href='nagelkerke.html'>nagelkerke</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Salvatore Mangiafico, <a href='mailto:mangiafico@njaes.rutgers.edu'>mangiafico@njaes.rutgers.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>BrendonSmall</span>)
-<span class='no'>BrendonSmall</span>$<span class='no'>Calories</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='no'>BrendonSmall</span>$<span class='no'>Calories</span>)
-<span class='no'>BrendonSmall</span>$<span class='no'>Calories2</span> <span class='kw'>=</span> <span class='no'>BrendonSmall</span>$<span class='no'>Calories</span> ^ <span class='fl'>2</span>
-<span class='no'>model.1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sodium</span> ~ <span class='no'>Calories</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BrendonSmall</span>)
-<span class='no'>model.2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sodium</span> ~ <span class='no'>Calories</span> + <span class='no'>Calories2</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BrendonSmall</span>)
-<span class='no'>model.3</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>Sodium</span> ~ <span class='no'>Calories</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BrendonSmall</span>, <span class='kw'>family</span><span class='kw'>=</span><span class='st'>"Gamma"</span>)
-<span class='no'>quadplat</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>a</span>, <span class='no'>b</span>, <span class='no'>clx</span>) {
-          <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>x</span>  <span class='kw'>&lt;</span> <span class='no'>clx</span>, <span class='no'>a</span> + <span class='no'>b</span> * <span class='no'>x</span>   + (-<span class='fl'>0.5</span>*<span class='no'>b</span>/<span class='no'>clx</span>) * <span class='no'>x</span>   * <span class='no'>x</span>,
-                           <span class='no'>a</span> + <span class='no'>b</span> * <span class='no'>clx</span> + (-<span class='fl'>0.5</span>*<span class='no'>b</span>/<span class='no'>clx</span>) * <span class='no'>clx</span> * <span class='no'>clx</span>)}
-<span class='no'>model.4</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/nls.html'>nls</a></span>(<span class='no'>Sodium</span> ~ <span class='fu'>quadplat</span>(<span class='no'>Calories</span>, <span class='no'>a</span>, <span class='no'>b</span>, <span class='no'>clx</span>),
-              <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BrendonSmall</span>,
-              <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>a</span><span class='kw'>=</span><span class='fl'>519</span>, <span class='kw'>b</span><span class='kw'>=</span><span class='fl'>0.359</span>, <span class='kw'>clx</span> <span class='kw'>=</span> <span class='fl'>2300</span>))
-<span class='fu'>accuracy</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>model.1</span>, <span class='no'>model.2</span>, <span class='no'>model.3</span>, <span class='no'>model.4</span>), <span class='kw'>plotit</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; $Models
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>BrendonSmall</span><span class='op'>)</span>
+<span class='va'>BrendonSmall</span><span class='op'>$</span><span class='va'>Calories</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>BrendonSmall</span><span class='op'>$</span><span class='va'>Calories</span><span class='op'>)</span>
+<span class='va'>BrendonSmall</span><span class='op'>$</span><span class='va'>Calories2</span> <span class='op'>=</span> <span class='va'>BrendonSmall</span><span class='op'>$</span><span class='va'>Calories</span> <span class='op'>^</span> <span class='fl'>2</span>
+<span class='va'>model.1</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sodium</span> <span class='op'>~</span> <span class='va'>Calories</span>, data <span class='op'>=</span> <span class='va'>BrendonSmall</span><span class='op'>)</span>
+<span class='va'>model.2</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sodium</span> <span class='op'>~</span> <span class='va'>Calories</span> <span class='op'>+</span> <span class='va'>Calories2</span>, data <span class='op'>=</span> <span class='va'>BrendonSmall</span><span class='op'>)</span>
+<span class='va'>model.3</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>Sodium</span> <span class='op'>~</span> <span class='va'>Calories</span>, data <span class='op'>=</span> <span class='va'>BrendonSmall</span>, family<span class='op'>=</span><span class='st'>"Gamma"</span><span class='op'>)</span>
+<span class='va'>quadplat</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>a</span>, <span class='va'>b</span>, <span class='va'>clx</span><span class='op'>)</span> <span class='op'>{</span>
+          <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>x</span>  <span class='op'>&lt;</span> <span class='va'>clx</span>, <span class='va'>a</span> <span class='op'>+</span> <span class='va'>b</span> <span class='op'>*</span> <span class='va'>x</span>   <span class='op'>+</span> <span class='op'>(</span><span class='op'>-</span><span class='fl'>0.5</span><span class='op'>*</span><span class='va'>b</span><span class='op'>/</span><span class='va'>clx</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>x</span>   <span class='op'>*</span> <span class='va'>x</span>,
+                           <span class='va'>a</span> <span class='op'>+</span> <span class='va'>b</span> <span class='op'>*</span> <span class='va'>clx</span> <span class='op'>+</span> <span class='op'>(</span><span class='op'>-</span><span class='fl'>0.5</span><span class='op'>*</span><span class='va'>b</span><span class='op'>/</span><span class='va'>clx</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>clx</span> <span class='op'>*</span> <span class='va'>clx</span><span class='op'>)</span><span class='op'>}</span>
+<span class='va'>model.4</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/nls.html'>nls</a></span><span class='op'>(</span><span class='va'>Sodium</span> <span class='op'>~</span> <span class='fu'>quadplat</span><span class='op'>(</span><span class='va'>Calories</span>, <span class='va'>a</span>, <span class='va'>b</span>, <span class='va'>clx</span><span class='op'>)</span>,
+              data <span class='op'>=</span> <span class='va'>BrendonSmall</span>,
+              start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a<span class='op'>=</span><span class='fl'>519</span>, b<span class='op'>=</span><span class='fl'>0.359</span>, clx <span class='op'>=</span> <span class='fl'>2300</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>accuracy</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>model.1</span>, <span class='va'>model.2</span>, <span class='va'>model.3</span>, <span class='va'>model.4</span><span class='op'>)</span>, plotit<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $Models
 #&gt;   Call                                                                         
 #&gt; 1 "lm(formula = Sodium ~ Calories, data = BrendonSmall)"                       
 #&gt; 2 "lm(formula = Sodium ~ Calories + Calories2, data = BrendonSmall)"           
@@ -225,12 +229,13 @@ vs. the actual values for each model.</p></td>
 #&gt; 4               0.980                 0.981           0.865     1.96
 #&gt; </div><div class='input'>
 <span class='co'>### Perfect and poor model fits</span>
-<span class='no'>X</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>,  <span class='fl'>3</span>,  <span class='fl'>4</span>,  <span class='fl'>5</span>,  <span class='fl'>6</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>9</span>, <span class='fl'>10</span>, <span class='fl'>11</span>, <span class='fl'>12</span>)
-<span class='no'>Y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>,  <span class='fl'>3</span>,  <span class='fl'>4</span>,  <span class='fl'>5</span>,  <span class='fl'>6</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>9</span>, <span class='fl'>10</span>, <span class='fl'>11</span>, <span class='fl'>12</span>)
-<span class='no'>Z</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>12</span>, <span class='fl'>13</span>, <span class='fl'>6</span>, <span class='fl'>10</span>, <span class='fl'>13</span>, <span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>5</span>,  <span class='fl'>6</span>, <span class='fl'>10</span>, <span class='fl'>14</span>)
-<span class='no'>perfect</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Y</span> ~ <span class='no'>X</span>)
-<span class='no'>poor</span>    <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Z</span> ~ <span class='no'>X</span>)
-<span class='fu'>accuracy</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>perfect</span>, <span class='no'>poor</span>), <span class='kw'>plotit</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; $Models
+<span class='va'>X</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>,  <span class='fl'>3</span>,  <span class='fl'>4</span>,  <span class='fl'>5</span>,  <span class='fl'>6</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>9</span>, <span class='fl'>10</span>, <span class='fl'>11</span>, <span class='fl'>12</span><span class='op'>)</span>
+<span class='va'>Y</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>,  <span class='fl'>3</span>,  <span class='fl'>4</span>,  <span class='fl'>5</span>,  <span class='fl'>6</span>, <span class='fl'>7</span>, <span class='fl'>8</span>, <span class='fl'>9</span>, <span class='fl'>10</span>, <span class='fl'>11</span>, <span class='fl'>12</span><span class='op'>)</span>
+<span class='va'>Z</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>12</span>, <span class='fl'>13</span>, <span class='fl'>6</span>, <span class='fl'>10</span>, <span class='fl'>13</span>, <span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>5</span>,  <span class='fl'>6</span>, <span class='fl'>10</span>, <span class='fl'>14</span><span class='op'>)</span>
+<span class='va'>perfect</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Y</span> <span class='op'>~</span> <span class='va'>X</span><span class='op'>)</span>
+<span class='va'>poor</span>    <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Z</span> <span class='op'>~</span> <span class='va'>X</span><span class='op'>)</span>
+<span class='fu'>accuracy</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>perfect</span>, <span class='va'>poor</span><span class='op'>)</span>, plotit<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $Models
 #&gt;   Call                 
 #&gt; 1 "lm(formula = Y ~ X)"
 #&gt; 2 "lm(formula = Z ~ X)"
@@ -259,7 +264,7 @@ vs. the actual values for each model.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

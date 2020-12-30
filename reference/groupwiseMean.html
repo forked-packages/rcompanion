@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcompanion</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.26</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -114,22 +114,22 @@
              groups.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>groupwiseMean</span>(
-  <span class='kw'>formula</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>var</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>group</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>conf</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>R</span> <span class='kw'>=</span> <span class='fl'>5000</span>,
-  <span class='kw'>boot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>traditional</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>normal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>basic</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>percentile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>bca</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>groupwiseMean</span><span class='op'>(</span>
+  formula <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  var <span class='op'>=</span> <span class='cn'>NULL</span>,
+  group <span class='op'>=</span> <span class='cn'>NULL</span>,
+  conf <span class='op'>=</span> <span class='fl'>0.95</span>,
+  R <span class='op'>=</span> <span class='fl'>5000</span>,
+  boot <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  traditional <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  normal <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  basic <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  percentile <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  bca <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  digits <span class='op'>=</span> <span class='fl'>3</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -230,14 +230,18 @@ See <code>boot.ci</code>.</p></td>
 
     <div class='dont-index'><p><code><a href='groupwiseMedian.html'>groupwiseMedian</a></code>, <code><a href='groupwiseHuber.html'>groupwiseHuber</a></code>
          <code><a href='groupwiseGeometric.html'>groupwiseGeometric</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Salvatore Mangiafico, <a href='mailto:mangiafico@njaes.rutgers.edu'>mangiafico@njaes.rutgers.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### Example with formula notation</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>Catbus</span>)
-<span class='fu'>groupwiseMean</span>(<span class='no'>Steps</span> ~ <span class='no'>Teacher</span> + <span class='no'>Sex</span>,
-              <span class='kw'>data</span>        <span class='kw'>=</span> <span class='no'>Catbus</span>,
-              <span class='kw'>traditional</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-              <span class='kw'>percentile</span>  <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;   Teacher    Sex n Mean Conf.level Percentile.lower Percentile.upper
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>Catbus</span><span class='op'>)</span>
+<span class='fu'>groupwiseMean</span><span class='op'>(</span><span class='va'>Steps</span> <span class='op'>~</span> <span class='va'>Teacher</span> <span class='op'>+</span> <span class='va'>Sex</span>,
+              data        <span class='op'>=</span> <span class='va'>Catbus</span>,
+              traditional <span class='op'>=</span> <span class='cn'>FALSE</span>,
+              percentile  <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   Teacher    Sex n Mean Conf.level Percentile.lower Percentile.upper
 #&gt; 1  Catbus female 6 8000       0.95             7000             9000
 #&gt; 2  Catbus   male 4 7000       0.95             5500             8500
 #&gt; 3 Satsuki female 4 8500       0.95             8000             9000
@@ -245,12 +249,13 @@ See <code>boot.ci</code>.</p></td>
 #&gt; 5  Totoro female 5 8200       0.95             7000             9400
 #&gt; 6  Totoro   male 4 7000       0.95             6250             7750</div><div class='input'>
 <span class='co'>### Example with variable notation</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>Catbus</span>)
-<span class='fu'>groupwiseMean</span>(<span class='kw'>data</span>        <span class='kw'>=</span> <span class='no'>Catbus</span>,
-              <span class='kw'>var</span>         <span class='kw'>=</span> <span class='st'>"Steps"</span>,
-              <span class='kw'>group</span>       <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Teacher"</span>, <span class='st'>"Sex"</span>),
-              <span class='kw'>traditional</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-              <span class='kw'>percentile</span>  <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;   Teacher    Sex n Mean Conf.level Percentile.lower Percentile.upper
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>Catbus</span><span class='op'>)</span>
+<span class='fu'>groupwiseMean</span><span class='op'>(</span>data        <span class='op'>=</span> <span class='va'>Catbus</span>,
+              var         <span class='op'>=</span> <span class='st'>"Steps"</span>,
+              group       <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Teacher"</span>, <span class='st'>"Sex"</span><span class='op'>)</span>,
+              traditional <span class='op'>=</span> <span class='cn'>FALSE</span>,
+              percentile  <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   Teacher    Sex n Mean Conf.level Percentile.lower Percentile.upper
 #&gt; 1  Catbus female 6 8000       0.95             7000             9000
 #&gt; 2  Catbus   male 4 7000       0.95             5500             8500
 #&gt; 3 Satsuki female 4 8500       0.95             8000             9000
@@ -273,7 +278,7 @@ See <code>boot.ci</code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

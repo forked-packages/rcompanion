@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcompanion</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.26</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -114,17 +114,17 @@
              contingency table.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>groupwiseCMH</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>group</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='kw'>fisher</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>gtest</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>chisq</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"fdr"</span>,
-  <span class='kw'>correct</span> <span class='kw'>=</span> <span class='st'>"none"</span>,
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>groupwiseCMH</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  group <span class='op'>=</span> <span class='fl'>3</span>,
+  fisher <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  gtest <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  chisq <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  method <span class='op'>=</span> <span class='st'>"fdr"</span>,
+  correct <span class='op'>=</span> <span class='st'>"none"</span>,
+  digits <span class='op'>=</span> <span class='fl'>3</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -185,18 +185,23 @@ See <code>GTest</code>.</p></td>
     <div class='dont-index'><p><code><a href='nominalSymmetryTest.html'>nominalSymmetryTest</a></code>, <code><a href='pairwiseMcnemar.html'>pairwiseMcnemar</a></code>,
          <code><a href='pairwiseNominalIndependence.html'>pairwiseNominalIndependence</a></code>, 
          <code><a href='pairwiseNominalMatrix.html'>pairwiseNominalMatrix</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Salvatore Mangiafico, <a href='mailto:mangiafico@njaes.rutgers.edu'>mangiafico@njaes.rutgers.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### Post-hoc for Cochran-Mantel-Haenszel test</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>AndersonBias</span>)
-<span class='no'>Table</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/xtabs.html'>xtabs</a></span>(<span class='no'>Count</span> ~ <span class='no'>Sex</span> + <span class='no'>Result</span> + <span class='no'>County</span>,
-              <span class='kw'>data</span><span class='kw'>=</span><span class='no'>AndersonBias</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/ftable.html'>ftable</a></span>(<span class='no'>Table</span>)</div><div class='output co'>#&gt;               County Bloom Cobblestone Dougal Heimlich
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>AndersonBias</span><span class='op'>)</span>
+<span class='va'>Table</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/xtabs.html'>xtabs</a></span><span class='op'>(</span><span class='va'>Count</span> <span class='op'>~</span> <span class='va'>Sex</span> <span class='op'>+</span> <span class='va'>Result</span> <span class='op'>+</span> <span class='va'>County</span>,
+              data<span class='op'>=</span><span class='va'>AndersonBias</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/ftable.html'>ftable</a></span><span class='op'>(</span><span class='va'>Table</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;               County Bloom Cobblestone Dougal Heimlich
 #&gt; Sex    Result                                         
 #&gt; Female Pass              9          11      9       15
 #&gt;        Fail              5           4      7        8
 #&gt; Male   Pass              7           9     19       14
-#&gt;        Fail             17          21      9       17</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/mantelhaen.test.html'>mantelhaen.test</a></span>(<span class='no'>Table</span>)</div><div class='output co'>#&gt; 
+#&gt;        Fail             17          21      9       17</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/mantelhaen.test.html'>mantelhaen.test</a></span><span class='op'>(</span><span class='va'>Table</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; 	Mantel-Haenszel chi-squared test with continuity correction
 #&gt; 
 #&gt; data:  Table
@@ -207,14 +212,15 @@ See <code>GTest</code>.</p></td>
 #&gt; sample estimates:
 #&gt; common odds ratio 
 #&gt;          2.306119 
-#&gt; </div><div class='input'><span class='fu'>groupwiseCMH</span>(<span class='no'>Table</span>,
-             <span class='kw'>group</span>   <span class='kw'>=</span> <span class='fl'>3</span>,
-             <span class='kw'>fisher</span>  <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-             <span class='kw'>gtest</span>   <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-             <span class='kw'>chisq</span>   <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-             <span class='kw'>method</span>  <span class='kw'>=</span> <span class='st'>"fdr"</span>,
-             <span class='kw'>correct</span> <span class='kw'>=</span> <span class='st'>"none"</span>,
-             <span class='kw'>digits</span>  <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; </div><div class='output co'>#&gt;         Group   Test p.value  adj.p
+#&gt; </div><div class='input'><span class='fu'>groupwiseCMH</span><span class='op'>(</span><span class='va'>Table</span>,
+             group   <span class='op'>=</span> <span class='fl'>3</span>,
+             fisher  <span class='op'>=</span> <span class='cn'>TRUE</span>,
+             gtest   <span class='op'>=</span> <span class='cn'>FALSE</span>,
+             chisq   <span class='op'>=</span> <span class='cn'>FALSE</span>,
+             method  <span class='op'>=</span> <span class='st'>"fdr"</span>,
+             correct <span class='op'>=</span> <span class='st'>"none"</span>,
+             digits  <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </div><div class='output co'>#&gt;         Group   Test p.value  adj.p
 #&gt; 1       Bloom Fisher  0.0468 0.0936
 #&gt; 2 Cobblestone Fisher  0.0102 0.0408
 #&gt; 3      Dougal Fisher  0.5230 0.5230
@@ -235,7 +241,7 @@ See <code>GTest</code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcompanion</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.26</span>
       </span>
     </div>
 
@@ -86,7 +86,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -124,18 +124,18 @@
              and scaling to a range (normalization).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>blom</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"general"</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='no'>pi</span>/<span class='fl'>8</span>,
-  <span class='kw'>complete</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>na.last</span> <span class='kw'>=</span> <span class='st'>"keep"</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>adjustN</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>blom</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  method <span class='op'>=</span> <span class='st'>"general"</span>,
+  alpha <span class='op'>=</span> <span class='va'>pi</span><span class='op'>/</span><span class='fl'>8</span>,
+  complete <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  na.last <span class='op'>=</span> <span class='st'>"keep"</span>,
+  na.rm <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  adjustN <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  min <span class='op'>=</span> <span class='fl'>1</span>,
+  max <span class='op'>=</span> <span class='fl'>10</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -250,31 +250,35 @@ transformed values.</p></td>
             on the accuracy of test scores.</p>            
 <p>Beasley and Erickson, 2009, Rank-based inverse normal 
             transformations are increasingly used, but are they merited?</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Salvatore Mangiafico, <a href='mailto:mangiafico@njaes.rutgers.edu'>mangiafico@njaes.rutgers.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>12345</span>)
-<span class='no'>A</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Lognormal.html'>rlnorm</a></span>(<span class='fl'>100</span>)
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='no'>A</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>12345</span><span class='op'>)</span>
+<span class='va'>A</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Lognormal.html'>rlnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>A</span><span class='op'>)</span>
 <span class='co'>### Convert data to normal scores by Elfving method</span>
-<span class='no'>B</span> <span class='kw'>=</span> <span class='fu'>blom</span>(<span class='no'>A</span>)
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='no'>B</span>)
+<span class='va'>B</span> <span class='op'>=</span> <span class='fu'>blom</span><span class='op'>(</span><span class='va'>A</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>B</span><span class='op'>)</span>
 <span class='co'>### Convert data to z scores </span>
-<span class='no'>C</span> <span class='kw'>=</span> <span class='fu'>blom</span>(<span class='no'>A</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"zscore"</span>)
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='no'>C</span>)
+<span class='va'>C</span> <span class='op'>=</span> <span class='fu'>blom</span><span class='op'>(</span><span class='va'>A</span>, method<span class='op'>=</span><span class='st'>"zscore"</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>C</span><span class='op'>)</span>
 <span class='co'>### Convert data to a scale of 1 to 10 </span>
-<span class='no'>D</span> <span class='kw'>=</span> <span class='fu'>blom</span>(<span class='no'>A</span>, <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"scale"</span>)
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='no'>D</span>)
+<span class='va'>D</span> <span class='op'>=</span> <span class='fu'>blom</span><span class='op'>(</span><span class='va'>A</span>, method<span class='op'>=</span><span class='st'>"scale"</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>D</span><span class='op'>)</span>
 
 <span class='co'>### Data from Sokal and Rohlf, 1995, </span>
 <span class='co'>### Biometry: The Principles and Practice of Statistics</span>
 <span class='co'>### in Biological Research</span>
-<span class='no'>Value</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>709</span>,<span class='fl'>679</span>,<span class='fl'>699</span>,<span class='fl'>657</span>,<span class='fl'>594</span>,<span class='fl'>677</span>,<span class='fl'>592</span>,<span class='fl'>538</span>,<span class='fl'>476</span>,<span class='fl'>508</span>,<span class='fl'>505</span>,<span class='fl'>539</span>)
-<span class='no'>Sex</span>   <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"Male"</span>,<span class='fl'>3</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"Female"</span>,<span class='fl'>3</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"Male"</span>,<span class='fl'>3</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"Female"</span>,<span class='fl'>3</span>))
-<span class='no'>Fat</span>   <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"Fresh"</span>, <span class='fl'>6</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"Rancid"</span>, <span class='fl'>6</span>))
-<span class='no'>ValueBlom</span> <span class='kw'>=</span> <span class='fu'>blom</span>(<span class='no'>Value</span>)
-<span class='no'>Sokal</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='no'>ValueBlom</span>, <span class='no'>Sex</span>, <span class='no'>Fat</span>)
-<span class='no'>model</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>ValueBlom</span> ~ <span class='no'>Sex</span> * <span class='no'>Fat</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>Sokal</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Analysis of Variance Table
+<span class='va'>Value</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>709</span>,<span class='fl'>679</span>,<span class='fl'>699</span>,<span class='fl'>657</span>,<span class='fl'>594</span>,<span class='fl'>677</span>,<span class='fl'>592</span>,<span class='fl'>538</span>,<span class='fl'>476</span>,<span class='fl'>508</span>,<span class='fl'>505</span>,<span class='fl'>539</span><span class='op'>)</span>
+<span class='va'>Sex</span>   <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"Male"</span>,<span class='fl'>3</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"Female"</span>,<span class='fl'>3</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"Male"</span>,<span class='fl'>3</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"Female"</span>,<span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>Fat</span>   <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"Fresh"</span>, <span class='fl'>6</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"Rancid"</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>ValueBlom</span> <span class='op'>=</span> <span class='fu'>blom</span><span class='op'>(</span><span class='va'>Value</span><span class='op'>)</span>
+<span class='va'>Sokal</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>ValueBlom</span>, <span class='va'>Sex</span>, <span class='va'>Fat</span><span class='op'>)</span>
+<span class='va'>model</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>ValueBlom</span> <span class='op'>~</span> <span class='va'>Sex</span> <span class='op'>*</span> <span class='va'>Fat</span>, data<span class='op'>=</span><span class='va'>Sokal</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Analysis of Variance Table
 #&gt; 
 #&gt; Response: ValueBlom
 #&gt;           Df Sum Sq Mean Sq F value    Pr(&gt;F)    
@@ -283,10 +287,12 @@ transformed values.</p></td>
 #&gt; Sex:Fat    1 0.5938  0.5938  2.3022 0.1676690    
 #&gt; Residuals  8 2.0636  0.2579                      
 #&gt; ---
-#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span>(<span class='no'>model</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>model</span>), <span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span>(<span class='no'>model</span>))
-}</div></pre>
+#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -302,7 +308,7 @@ transformed values.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

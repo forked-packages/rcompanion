@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcompanion</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.26</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -114,15 +114,15 @@
              of symmetry across groups.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>pairwisePermutationSymmetry</span>(
-  <span class='kw'>formula</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>g</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>b</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"fdr"</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>pairwisePermutationSymmetry</span><span class='op'>(</span>
+  formula <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  x <span class='op'>=</span> <span class='cn'>NULL</span>,
+  g <span class='op'>=</span> <span class='cn'>NULL</span>,
+  b <span class='op'>=</span> <span class='cn'>NULL</span>,
+  method <span class='op'>=</span> <span class='st'>"fdr"</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -191,18 +191,22 @@ See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>stats::p.adjust</a></c
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='pairwisePermutationSymmetryMatrix.html'>pairwisePermutationSymmetryMatrix</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Salvatore Mangiafico, <a href='mailto:mangiafico@njaes.rutgers.edu'>mangiafico@njaes.rutgers.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>BobBelcher</span>)
-<span class='no'>BobBelcher</span>$<span class='no'>Instructor</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>( <span class='no'>BobBelcher</span>$<span class='no'>Instructor</span>,
-                  <span class='kw'>levels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Linda Belcher"</span>, <span class='st'>"Louise Belcher"</span>,
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>BobBelcher</span><span class='op'>)</span>
+<span class='va'>BobBelcher</span><span class='op'>$</span><span class='va'>Instructor</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span> <span class='va'>BobBelcher</span><span class='op'>$</span><span class='va'>Instructor</span>, 
+                  levels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Linda Belcher"</span>, <span class='st'>"Louise Belcher"</span>,
                              <span class='st'>"Tina Belcher"</span>, <span class='st'>"Bob Belcher"</span>,
-                             <span class='st'>"Gene Belcher"</span>))
-<span class='no'>BobBelcher</span>$<span class='no'>Likert.f</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>BobBelcher</span>$<span class='no'>Likert</span>, <span class='kw'>ordered</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='no'>PT</span> <span class='kw'>=</span> <span class='fu'>pairwisePermutationSymmetry</span>(<span class='no'>Likert.f</span> ~ <span class='no'>Instructor</span> <span class='kw'>|</span> <span class='no'>Rater</span>,
-                                 <span class='kw'>data</span>      <span class='kw'>=</span> <span class='no'>BobBelcher</span>,
-                                 <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"fdr"</span>)
-<span class='no'>PT</span></div><div class='output co'>#&gt;                            Comparison    Stat  p.value p.adjust
+                             <span class='st'>"Gene Belcher"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>BobBelcher</span><span class='op'>$</span><span class='va'>Likert.f</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>BobBelcher</span><span class='op'>$</span><span class='va'>Likert</span>, ordered<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>PT</span> <span class='op'>=</span> <span class='fu'>pairwisePermutationSymmetry</span><span class='op'>(</span><span class='va'>Likert.f</span> <span class='op'>~</span> <span class='va'>Instructor</span> <span class='op'>|</span> <span class='va'>Rater</span>,
+                                 data      <span class='op'>=</span> <span class='va'>BobBelcher</span>,
+                                 method <span class='op'>=</span> <span class='st'>"fdr"</span><span class='op'>)</span>
+<span class='va'>PT</span>
+</div><div class='output co'>#&gt;                            Comparison    Stat  p.value p.adjust
 #&gt; 1  Linda Belcher - Louise Belcher = 0 -0.9045   0.3657  0.42680
 #&gt; 2    Linda Belcher - Tina Belcher = 0   0.378   0.7055  0.70550
 #&gt; 3     Linda Belcher - Bob Belcher = 0    2.38  0.01729  0.03458
@@ -212,9 +216,10 @@ See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>stats::p.adjust</a></c
 #&gt; 7   Louise Belcher - Gene Belcher = 0   2.744 0.006068  0.03458
 #&gt; 8      Tina Belcher - Bob Belcher = 0   2.412  0.01586  0.03458
 #&gt; 9     Tina Belcher - Gene Belcher = 0   2.528  0.01147  0.03458
-#&gt; 10     Bob Belcher - Gene Belcher = 0  0.8704   0.3841  0.42680</div><div class='input'><span class='fu'><a href='cldList.html'>cldList</a></span>(<span class='kw'>comparison</span> <span class='kw'>=</span> <span class='no'>PT</span>$<span class='no'>Comparison</span>,
-        <span class='kw'>p.value</span>    <span class='kw'>=</span> <span class='no'>PT</span>$<span class='no'>p.adjust</span>,
-        <span class='kw'>threshold</span>  <span class='kw'>=</span> <span class='fl'>0.05</span>)</div><div class='output co'>#&gt;           Group Letter MonoLetter
+#&gt; 10     Bob Belcher - Gene Belcher = 0  0.8704   0.3841  0.42680</div><div class='input'><span class='fu'><a href='cldList.html'>cldList</a></span><span class='op'>(</span>comparison <span class='op'>=</span> <span class='va'>PT</span><span class='op'>$</span><span class='va'>Comparison</span>,
+        p.value    <span class='op'>=</span> <span class='va'>PT</span><span class='op'>$</span><span class='va'>p.adjust</span>,
+        threshold  <span class='op'>=</span> <span class='fl'>0.05</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;           Group Letter MonoLetter
 #&gt; 1  LindaBelcher      a         a 
 #&gt; 2 LouiseBelcher      a         a 
 #&gt; 3   TinaBelcher      a         a 
@@ -236,7 +241,7 @@ See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>stats::p.adjust</a></c
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcompanion</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.26</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -114,18 +114,18 @@
              curve of the distribution.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plotDensityHistogram</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"gray"</span>,
-  <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>linecol</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
-  <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>bw</span> <span class='kw'>=</span> <span class='st'>"nrd0"</span>,
-  <span class='kw'>kernel</span> <span class='kw'>=</span> <span class='st'>"gaussian"</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>plotDensityHistogram</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  prob <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  col <span class='op'>=</span> <span class='st'>"gray"</span>,
+  main <span class='op'>=</span> <span class='st'>""</span>,
+  linecol <span class='op'>=</span> <span class='st'>"black"</span>,
+  lwd <span class='op'>=</span> <span class='fl'>2</span>,
+  adjust <span class='op'>=</span> <span class='fl'>1</span>,
+  bw <span class='op'>=</span> <span class='st'>"nrd0"</span>,
+  kernel <span class='op'>=</span> <span class='st'>"gaussian"</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -187,13 +187,17 @@ plot smoother.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='plotNormalHistogram.html'>plotNormalHistogram</a></code> <code><a href='plotNormalDensity.html'>plotNormalDensity</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Salvatore Mangiafico, <a href='mailto:mangiafico@njaes.rutgers.edu'>mangiafico@njaes.rutgers.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### Plot of residuals from a model fit with lm</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>Catbus</span>)
-<span class='no'>model</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Steps</span> ~ <span class='no'>Sex</span> + <span class='no'>Teacher</span>,
-           <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>Catbus</span>)
-<span class='fu'>plotDensityHistogram</span>(<span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span>(<span class='no'>model</span>))</div><div class='img'><img src='plotDensityHistogram-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>Catbus</span><span class='op'>)</span>
+<span class='va'>model</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Steps</span> <span class='op'>~</span> <span class='va'>Sex</span> <span class='op'>+</span> <span class='va'>Teacher</span>,
+           data <span class='op'>=</span> <span class='va'>Catbus</span><span class='op'>)</span>
+<span class='fu'>plotDensityHistogram</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span><span class='op'>)</span>          
+</div><div class='img'><img src='plotDensityHistogram-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -210,7 +214,7 @@ plot smoother.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

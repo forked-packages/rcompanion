@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcompanion</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.26</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -118,7 +118,7 @@
              McNemar and McNemar-Bowker tests in use.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>nominalSymmetryTest</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"fdr"</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>nominalSymmetryTest</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"fdr"</span>, digits <span class='op'>=</span> <span class='fl'>3</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,19 +166,24 @@ See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>stats::p.adjust</a></c
     <div class='dont-index'><p><code><a href='pairwiseMcnemar.html'>pairwiseMcnemar</a></code>, <code><a href='groupwiseCMH.html'>groupwiseCMH</a></code>,
          <code><a href='pairwiseNominalIndependence.html'>pairwiseNominalIndependence</a></code>, 
          <code><a href='pairwiseNominalMatrix.html'>pairwiseNominalMatrix</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Salvatore Mangiafico, <a href='mailto:mangiafico@njaes.rutgers.edu'>mangiafico@njaes.rutgers.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### 2 x 2 repeated matrix example</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>AndersonRainBarrel</span>)
-<span class='fu'>nominalSymmetryTest</span>(<span class='no'>AndersonRainBarrel</span>)</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; $Global.test.for.symmetry
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>AndersonRainBarrel</span><span class='op'>)</span>
+<span class='fu'>nominalSymmetryTest</span><span class='op'>(</span><span class='va'>AndersonRainBarrel</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; $Global.test.for.symmetry
 #&gt;   Dimensions p.value
 #&gt; 1      2 x 2  0.0169
-#&gt; </div><div class='input'>
+#&gt; </div><div class='input'>                    
 <span class='co'>### 3 x 3 repeated matrix example with Monte Carlo</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>AndersonRainGarden</span>)
-<span class='fu'>nominalSymmetryTest</span>(<span class='no'>AndersonRainGarden</span>,
-                    <span class='kw'>MonteCarlo</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-                    <span class='kw'>ntrial</span>     <span class='kw'>=</span> <span class='fl'>10000</span>)</div><div class='output co'>#&gt;  
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>AndersonRainGarden</span><span class='op'>)</span>
+<span class='fu'>nominalSymmetryTest</span><span class='op'>(</span><span class='va'>AndersonRainGarden</span>,
+                    MonteCarlo <span class='op'>=</span> <span class='cn'>TRUE</span>,
+                    ntrial     <span class='op'>=</span> <span class='fl'>10000</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  
 #&gt;  WARNING: Number of simulated withdrawels is lower than the number of possible outcomes. 
 #&gt;                 This might yield unreliable results!
 #&gt; 
@@ -200,12 +205,13 @@ See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>stats::p.adjust</a></c
 #&gt; $p.adjustment
 #&gt;   Method
 #&gt; 1    fdr
-#&gt; </div><div class='input'>
+#&gt; </div><div class='input'>                    
 <span class='co'>### 4 x 4 repeated matrix example that fails with mcnemar.test</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>Religion</span>)
-<span class='fu'>nominalSymmetryTest</span>(<span class='no'>Religion</span>,
-                    <span class='kw'>MonteCarlo</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-                    <span class='kw'>ntrial</span>     <span class='kw'>=</span> <span class='fl'>10000</span>)</div><div class='output co'>#&gt;  
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>Religion</span><span class='op'>)</span>
+<span class='fu'>nominalSymmetryTest</span><span class='op'>(</span><span class='va'>Religion</span>,
+                    MonteCarlo <span class='op'>=</span> <span class='cn'>TRUE</span>,
+                    ntrial     <span class='op'>=</span> <span class='fl'>10000</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  
 #&gt;  WARNING: Number of simulated withdrawels is lower than the number of possible outcomes. 
 #&gt;                 This might yield unreliable results!
 #&gt; 
@@ -247,7 +253,7 @@ See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>stats::p.adjust</a></c
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

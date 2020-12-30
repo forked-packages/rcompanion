@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcompanion</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.26</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -118,14 +118,14 @@
              The function relies on the <code>coin</code> package.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>pairwiseOrdinalIndependence</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>compare</span> <span class='kw'>=</span> <span class='st'>"row"</span>,
-  <span class='kw'>scores</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"fdr"</span>,
-  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>pairwiseOrdinalIndependence</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  compare <span class='op'>=</span> <span class='st'>"row"</span>,
+  scores <span class='op'>=</span> <span class='cn'>NULL</span>,
+  method <span class='op'>=</span> <span class='st'>"fdr"</span>,
+  digits <span class='op'>=</span> <span class='fl'>3</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -170,48 +170,58 @@ See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>stats::p.adjust</a></c
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='pairwiseNominalIndependence.html'>pairwiseNominalIndependence</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Salvatore Mangiafico, <a href='mailto:mangiafico@njaes.rutgers.edu'>mangiafico@njaes.rutgers.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### Independence test for table with one ordered variable</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>Breakfast</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>coin</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/coin/man/ContingencyTests.html'>chisq_test</a></span>(<span class='no'>Breakfast</span>,
-           <span class='kw'>scores</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"Breakfast"</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>2</span>, -<span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>2</span>)))</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>Breakfast</span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='http://coin.r-forge.r-project.org'>coin</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/coin/man/ContingencyTests.html'>chisq_test</a></span><span class='op'>(</span><span class='va'>Breakfast</span>,
+           scores <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"Breakfast"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>2</span>, <span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; 	Asymptotic Generalized Pearson Chi-Squared Test
 #&gt; 
 #&gt; data:  Breakfast (ordered) by Travel (Walk, Bus, Drive)
 #&gt; chi-squared = 8.6739, df = 2, p-value = 0.01308
-#&gt; </div><div class='input'><span class='no'>PT</span> <span class='kw'>=</span> <span class='fu'>pairwiseOrdinalIndependence</span>(<span class='no'>Breakfast</span>, <span class='kw'>compare</span> <span class='kw'>=</span> <span class='st'>"row"</span>)
-<span class='no'>PT</span></div><div class='output co'>#&gt;     Comparison p.value p.adjust
+#&gt; </div><div class='input'><span class='va'>PT</span> <span class='op'>=</span> <span class='fu'>pairwiseOrdinalIndependence</span><span class='op'>(</span><span class='va'>Breakfast</span>, compare <span class='op'>=</span> <span class='st'>"row"</span><span class='op'>)</span>
+<span class='va'>PT</span>
+</div><div class='output co'>#&gt;     Comparison p.value p.adjust
 #&gt; 1   Walk : Bus 0.12800   0.1570
 #&gt; 2 Walk : Drive 0.00462   0.0139
-#&gt; 3  Bus : Drive 0.15700   0.1570</div><div class='input'><span class='fu'><a href='cldList.html'>cldList</a></span>(<span class='kw'>comparison</span> <span class='kw'>=</span> <span class='no'>PT</span>$<span class='no'>Comparison</span>,
-        <span class='kw'>p.value</span>    <span class='kw'>=</span> <span class='no'>PT</span>$<span class='no'>p.value</span>,
-        <span class='kw'>threshold</span>  <span class='kw'>=</span> <span class='fl'>0.05</span>)</div><div class='output co'>#&gt;   Group Letter MonoLetter
+#&gt; 3  Bus : Drive 0.15700   0.1570</div><div class='input'><span class='fu'><a href='cldList.html'>cldList</a></span><span class='op'>(</span>comparison <span class='op'>=</span> <span class='va'>PT</span><span class='op'>$</span><span class='va'>Comparison</span>, 
+        p.value    <span class='op'>=</span> <span class='va'>PT</span><span class='op'>$</span><span class='va'>p.value</span>, 
+        threshold  <span class='op'>=</span> <span class='fl'>0.05</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   Group Letter MonoLetter
 #&gt; 1  Walk      a         a 
 #&gt; 2   Bus     ab         ab
-#&gt; 3 Drive      b          b</div><div class='input'>
+#&gt; 3 Drive      b          b</div><div class='input'>        
 <span class='co'>### Similar to Kruskal-Wallis test for Likert data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>PoohPiglet</span>)
-<span class='no'>XT</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/xtabs.html'>xtabs</a></span>(~ <span class='no'>Speaker</span> + <span class='no'>Likert</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>PoohPiglet</span>)
-<span class='no'>XT</span></div><div class='output co'>#&gt;         Likert
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>PoohPiglet</span><span class='op'>)</span>
+<span class='va'>XT</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/xtabs.html'>xtabs</a></span><span class='op'>(</span><span class='op'>~</span> <span class='va'>Speaker</span> <span class='op'>+</span> <span class='va'>Likert</span>, data <span class='op'>=</span> <span class='va'>PoohPiglet</span><span class='op'>)</span>
+<span class='va'>XT</span>
+</div><div class='output co'>#&gt;         Likert
 #&gt; Speaker  1 2 3 4 5
 #&gt;   Piglet 1 6 2 1 0
 #&gt;   Pooh   0 0 1 6 3
-#&gt;   Tigger 0 0 2 6 2</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>coin</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/coin/man/ContingencyTests.html'>chisq_test</a></span>(<span class='no'>XT</span>,
-           <span class='kw'>scores</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"Likert"</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>5</span>)))</div><div class='output co'>#&gt; 
+#&gt;   Tigger 0 0 2 6 2</div><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='http://coin.r-forge.r-project.org'>coin</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/coin/man/ContingencyTests.html'>chisq_test</a></span><span class='op'>(</span><span class='va'>XT</span>,
+           scores <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"Likert"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; 	Asymptotic Generalized Pearson Chi-Squared Test
 #&gt; 
 #&gt; data:  Likert (ordered) by Speaker (Piglet, Pooh, Tigger)
 #&gt; chi-squared = 18.423, df = 2, p-value = 9.991e-05
-#&gt; </div><div class='input'><span class='no'>PT</span><span class='kw'>=</span><span class='fu'>pairwiseOrdinalIndependence</span>(<span class='no'>XT</span>, <span class='kw'>compare</span> <span class='kw'>=</span> <span class='st'>"row"</span>)
-<span class='no'>PT</span></div><div class='output co'>#&gt;        Comparison  p.value p.adjust
+#&gt; </div><div class='input'><span class='va'>PT</span><span class='op'>=</span><span class='fu'>pairwiseOrdinalIndependence</span><span class='op'>(</span><span class='va'>XT</span>, compare <span class='op'>=</span> <span class='st'>"row"</span><span class='op'>)</span>
+<span class='va'>PT</span>
+</div><div class='output co'>#&gt;        Comparison  p.value p.adjust
 #&gt; 1   Piglet : Pooh 0.000310 0.000902
 #&gt; 2 Piglet : Tigger 0.000601 0.000902
-#&gt; 3   Pooh : Tigger 0.474000 0.474000</div><div class='input'><span class='fu'><a href='cldList.html'>cldList</a></span>(<span class='kw'>comparison</span> <span class='kw'>=</span> <span class='no'>PT</span>$<span class='no'>Comparison</span>,
-        <span class='kw'>p.value</span>    <span class='kw'>=</span> <span class='no'>PT</span>$<span class='no'>p.value</span>,
-        <span class='kw'>threshold</span>  <span class='kw'>=</span> <span class='fl'>0.05</span>)</div><div class='output co'>#&gt;    Group Letter MonoLetter
+#&gt; 3   Pooh : Tigger 0.474000 0.474000</div><div class='input'><span class='fu'><a href='cldList.html'>cldList</a></span><span class='op'>(</span>comparison <span class='op'>=</span> <span class='va'>PT</span><span class='op'>$</span><span class='va'>Comparison</span>, 
+        p.value    <span class='op'>=</span> <span class='va'>PT</span><span class='op'>$</span><span class='va'>p.value</span>, 
+        threshold  <span class='op'>=</span> <span class='fl'>0.05</span><span class='op'>)</span>         
+</div><div class='output co'>#&gt;    Group Letter MonoLetter
 #&gt; 1 Piglet      a         a 
 #&gt; 2   Pooh      b          b
 #&gt; 3 Tigger      b          b</div><div class='input'>                                                              
@@ -231,7 +241,7 @@ See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>stats::p.adjust</a></c
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

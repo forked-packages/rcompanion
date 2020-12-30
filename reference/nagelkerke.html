@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcompanion</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.26</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -114,7 +114,7 @@
              R-squared measures, along with p-values, for models.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>nagelkerke</span>(<span class='no'>fit</span>, <span class='kw'>null</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>restrictNobs</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>nagelkerke</span><span class='op'>(</span><span class='va'>fit</span>, null <span class='op'>=</span> <span class='cn'>NULL</span>, restrictNobs <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -194,15 +194,19 @@ Works with only some model object types.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='accuracy.html'>accuracy</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Salvatore Mangiafico, <a href='mailto:mangiafico@njaes.rutgers.edu'>mangiafico@njaes.rutgers.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>### Logistic regression example</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>AndersonBias</span>)
-<span class='no'>model</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>Result</span> ~ <span class='no'>County</span> + <span class='no'>Sex</span> + <span class='no'>County</span>:<span class='no'>Sex</span>,
-           <span class='kw'>weight</span> <span class='kw'>=</span> <span class='no'>Count</span>,
-           <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>AndersonBias</span>,
-           <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span>(<span class='kw'>link</span><span class='kw'>=</span><span class='st'>"logit"</span>))
-<span class='fu'>nagelkerke</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; $Models
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>AndersonBias</span><span class='op'>)</span>
+<span class='va'>model</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>Result</span> <span class='op'>~</span> <span class='va'>County</span> <span class='op'>+</span> <span class='va'>Sex</span> <span class='op'>+</span> <span class='va'>County</span><span class='op'>:</span><span class='va'>Sex</span>,
+           weight <span class='op'>=</span> <span class='va'>Count</span>,
+           data <span class='op'>=</span> <span class='va'>AndersonBias</span>,
+           family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span><span class='op'>(</span>link<span class='op'>=</span><span class='st'>"logit"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>nagelkerke</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $Models
 #&gt;                                                                                                  
 #&gt; Model: "glm, Result ~ County + Sex + County:Sex, binomial(link = \"logit\"), AndersonBias, Count"
 #&gt; Null:  "glm, Result ~ 1, binomial(link = \"logit\"), AndersonBias, Count"                        
@@ -230,20 +234,21 @@ Works with only some model object types.</p></td>
 #&gt; </div><div class='input'>
 <span class='co'>### Quadratic plateau example </span>
 <span class='co'>### With nls, the  null needs to be defined</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>BrendonSmall</span>)
-<span class='no'>quadplat</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>a</span>, <span class='no'>b</span>, <span class='no'>clx</span>) {
-          <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>x</span>  <span class='kw'>&lt;</span> <span class='no'>clx</span>, <span class='no'>a</span> + <span class='no'>b</span> * <span class='no'>x</span>   + (-<span class='fl'>0.5</span>*<span class='no'>b</span>/<span class='no'>clx</span>) * <span class='no'>x</span>   * <span class='no'>x</span>,
-                           <span class='no'>a</span> + <span class='no'>b</span> * <span class='no'>clx</span> + (-<span class='fl'>0.5</span>*<span class='no'>b</span>/<span class='no'>clx</span>) * <span class='no'>clx</span> * <span class='no'>clx</span>)}
-<span class='no'>model</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/nls.html'>nls</a></span>(<span class='no'>Sodium</span> ~ <span class='fu'>quadplat</span>(<span class='no'>Calories</span>, <span class='no'>a</span>, <span class='no'>b</span>, <span class='no'>clx</span>),
-            <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BrendonSmall</span>,
-            <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>a</span>   <span class='kw'>=</span> <span class='fl'>519</span>,
-                         <span class='kw'>b</span>   <span class='kw'>=</span> <span class='fl'>0.359</span>,
-                         <span class='kw'>clx</span> <span class='kw'>=</span> <span class='fl'>2304</span>))
-<span class='no'>nullfunct</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>m</span>){<span class='no'>m</span>}
-<span class='no'>null.model</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/nls.html'>nls</a></span>(<span class='no'>Sodium</span> ~ <span class='fu'>nullfunct</span>(<span class='no'>Calories</span>, <span class='no'>m</span>),
-             <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>BrendonSmall</span>,
-             <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>m</span>   <span class='kw'>=</span> <span class='fl'>1346</span>))
-<span class='fu'>nagelkerke</span>(<span class='no'>model</span>, <span class='kw'>null</span><span class='kw'>=</span><span class='no'>null.model</span>)</div><div class='output co'>#&gt; $Models
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>BrendonSmall</span><span class='op'>)</span>
+<span class='va'>quadplat</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>a</span>, <span class='va'>b</span>, <span class='va'>clx</span><span class='op'>)</span> <span class='op'>{</span>
+          <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>x</span>  <span class='op'>&lt;</span> <span class='va'>clx</span>, <span class='va'>a</span> <span class='op'>+</span> <span class='va'>b</span> <span class='op'>*</span> <span class='va'>x</span>   <span class='op'>+</span> <span class='op'>(</span><span class='op'>-</span><span class='fl'>0.5</span><span class='op'>*</span><span class='va'>b</span><span class='op'>/</span><span class='va'>clx</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>x</span>   <span class='op'>*</span> <span class='va'>x</span>,
+                           <span class='va'>a</span> <span class='op'>+</span> <span class='va'>b</span> <span class='op'>*</span> <span class='va'>clx</span> <span class='op'>+</span> <span class='op'>(</span><span class='op'>-</span><span class='fl'>0.5</span><span class='op'>*</span><span class='va'>b</span><span class='op'>/</span><span class='va'>clx</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>clx</span> <span class='op'>*</span> <span class='va'>clx</span><span class='op'>)</span><span class='op'>}</span>
+<span class='va'>model</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/nls.html'>nls</a></span><span class='op'>(</span><span class='va'>Sodium</span> <span class='op'>~</span> <span class='fu'>quadplat</span><span class='op'>(</span><span class='va'>Calories</span>, <span class='va'>a</span>, <span class='va'>b</span>, <span class='va'>clx</span><span class='op'>)</span>,
+            data <span class='op'>=</span> <span class='va'>BrendonSmall</span>,
+            start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a   <span class='op'>=</span> <span class='fl'>519</span>,
+                         b   <span class='op'>=</span> <span class='fl'>0.359</span>,
+                         clx <span class='op'>=</span> <span class='fl'>2304</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>nullfunct</span> <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>m</span><span class='op'>)</span><span class='op'>{</span><span class='va'>m</span><span class='op'>}</span>
+<span class='va'>null.model</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/nls.html'>nls</a></span><span class='op'>(</span><span class='va'>Sodium</span> <span class='op'>~</span> <span class='fu'>nullfunct</span><span class='op'>(</span><span class='va'>Calories</span>, <span class='va'>m</span><span class='op'>)</span>,
+             data <span class='op'>=</span> <span class='va'>BrendonSmall</span>,
+             start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>m   <span class='op'>=</span> <span class='fl'>1346</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>nagelkerke</span><span class='op'>(</span><span class='va'>model</span>, null<span class='op'>=</span><span class='va'>null.model</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $Models
 #&gt;                                                                                                                                                                      
 #&gt; Model: "nls, Sodium ~ quadplat(Calories, a, b, clx), BrendonSmall, list(a = 519, b = 0.359, clx = 2304), default, list(50, 1e-05, 0.0009765625, FALSE, FALSE), FALSE"
 #&gt; Null:  "nls, Sodium ~ nullfunct(Calories, m), BrendonSmall, list(m = 1346), default, list(50, 1e-05, 0.0009765625, FALSE, FALSE), FALSE"                             
@@ -285,7 +290,7 @@ Works with only some model object types.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

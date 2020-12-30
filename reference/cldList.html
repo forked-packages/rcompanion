@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">rcompanion</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.26</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -114,20 +114,20 @@
              comparisons that were summarized in a table of comparisons</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cldList</span>(
-  <span class='kw'>formula</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>comparison</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>p.value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-  <span class='kw'>print.comp</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>remove.space</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>remove.equal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>remove.zero</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>swap.colon</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>swap.vs</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>cldList</span><span class='op'>(</span>
+  formula <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  comparison <span class='op'>=</span> <span class='cn'>NULL</span>,
+  p.value <span class='op'>=</span> <span class='cn'>NULL</span>,
+  threshold <span class='op'>=</span> <span class='fl'>0.05</span>,
+  print.comp <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  remove.space <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  remove.equal <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  remove.zero <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  swap.colon <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  swap.vs <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -226,22 +226,28 @@ comparisons</p></td>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p><a href='http://rcompanion.org/handbook/F_08.html'>http://rcompanion.org/handbook/F_08.html</a></p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Salvatore Mangiafico, <a href='mailto:mangiafico@njaes.rutgers.edu'>mangiafico@njaes.rutgers.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>PoohPiglet</span>)
-<span class='no'>PoohPiglet</span>$<span class='no'>Speaker</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>PoohPiglet</span>$<span class='no'>Speaker</span>,
-                            <span class='kw'>levels</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Pooh"</span>, <span class='st'>"Tigger"</span>, <span class='st'>"Piglet"</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>FSA</span>)</div><div class='output co'>#&gt; <span class='message'>## FSA v0.8.30. See citation('FSA') if used in publication.</span>
-#&gt; <span class='message'>## Run fishR() for related website and fishR('IFAR') for related book.</span></div><div class='input'><span class='no'>DT</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/FSA/man/dunnTest.html'>dunnTest</a></span>(<span class='no'>Likert</span> ~ <span class='no'>Speaker</span>,
-              <span class='kw'>data</span><span class='kw'>=</span><span class='no'>PoohPiglet</span>,
-              <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"bh"</span>)
-<span class='no'>DT</span> <span class='kw'>=</span> <span class='no'>DT</span>$<span class='no'>res</span>
-<span class='no'>DT</span></div><div class='output co'>#&gt;        Comparison          Z      P.unadj        P.adj
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>PoohPiglet</span><span class='op'>)</span>
+<span class='va'>PoohPiglet</span><span class='op'>$</span><span class='va'>Speaker</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>PoohPiglet</span><span class='op'>$</span><span class='va'>Speaker</span>,
+                            levels<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Pooh"</span>, <span class='st'>"Tigger"</span>, <span class='st'>"Piglet"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/droglenc/FSA'>FSA</a></span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>## FSA v0.8.31. See citation('FSA') if used in publication.</span>
+#&gt; <span class='message'>## Run fishR() for related website and fishR('IFAR') for related book.</span></div><div class='input'><span class='va'>DT</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/FSA/man/dunnTest.html'>dunnTest</a></span><span class='op'>(</span><span class='va'>Likert</span> <span class='op'>~</span> <span class='va'>Speaker</span>,
+              data<span class='op'>=</span><span class='va'>PoohPiglet</span>,
+              method<span class='op'>=</span><span class='st'>"bh"</span><span class='op'>)</span>
+<span class='va'>DT</span> <span class='op'>=</span> <span class='va'>DT</span><span class='op'>$</span><span class='va'>res</span>
+<span class='va'>DT</span>
+</div><div class='output co'>#&gt;        Comparison          Z      P.unadj        P.adj
 #&gt; 1   Piglet - Pooh -3.7702412 0.0001630898 0.0004892695
 #&gt; 2 Piglet - Tigger -3.2889338 0.0010056766 0.0015085149
-#&gt; 3   Pooh - Tigger  0.4813074 0.6302980448 0.6302980448</div><div class='input'><span class='fu'>cldList</span>(<span class='no'>P.adj</span> ~ <span class='no'>Comparison</span>,
-        <span class='kw'>data</span>      <span class='kw'>=</span> <span class='no'>DT</span>,
-        <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.05</span>)</div><div class='output co'>#&gt;    Group Letter MonoLetter
+#&gt; 3   Pooh - Tigger  0.4813074 0.6302980448 0.6302980448</div><div class='input'><span class='fu'>cldList</span><span class='op'>(</span><span class='va'>P.adj</span> <span class='op'>~</span> <span class='va'>Comparison</span>,
+        data      <span class='op'>=</span> <span class='va'>DT</span>,
+        threshold <span class='op'>=</span> <span class='fl'>0.05</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    Group Letter MonoLetter
 #&gt; 1 Piglet      a         a 
 #&gt; 2   Pooh      b          b
 #&gt; 3 Tigger      b          b</div><div class='input'>
@@ -261,7 +267,7 @@ comparisons</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
